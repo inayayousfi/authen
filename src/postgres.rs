@@ -180,11 +180,13 @@ impl PgUserRepo {
                 FROM information_schema.table_constraints tc
                 JOIN information_schema.key_column_usage kcu
                   ON tc.constraint_name = kcu.constraint_name
-                WHERE tc.table_name = 'authen_credentials' AND tc.constraint_type = 'PRIMARY KEY'"#
+                WHERE tc.table_name = 'authen_credentials' AND tc.constraint_type = 'PRIMARY KEY'"#,
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("authen_credentials PK check failed: {e}")))?;
+        .map_err(|e| {
+            AuthError::DatabaseError(format!("authen_credentials PK check failed: {e}"))
+        })?;
         let mut cred_pk_ok = false;
         for row in &cred_pk {
             let col: &str = row.get("column_name");
@@ -279,11 +281,13 @@ impl PgUserRepo {
                 JOIN information_schema.key_column_usage kcu
                   ON tc.constraint_name = kcu.constraint_name
                 WHERE tc.table_name = 'authen_oauth_accounts' AND tc.constraint_type = 'PRIMARY KEY'
-                ORDER BY kcu.ordinal_position"#
+                ORDER BY kcu.ordinal_position"#,
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("authen_oauth_accounts PK check failed: {e}")))?;
+        .map_err(|e| {
+            AuthError::DatabaseError(format!("authen_oauth_accounts PK check failed: {e}"))
+        })?;
 
         let mut oauth_pk_cols: Vec<String> =
             oauth_pk.iter().map(|row| row.get("column_name")).collect();

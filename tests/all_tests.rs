@@ -70,12 +70,10 @@ async fn test_auth_service_signup_not_implemented() {
     let auth_service = AuthService::default();
 
     let result = auth_service
-        .signup(
-            authen::auth_service::SignupMethod::Credentials {
-                identifier: "test_user".to_string(),
-                password: "plain_password".to_string(),
-            },
-        )
+        .signup(authen::auth_service::SignupMethod::Credentials {
+            identifier: "test_user".to_string(),
+            password: "plain_password".to_string(),
+        })
         .await;
     assert!(result.is_ok());
 }
@@ -90,23 +88,19 @@ async fn test_auth_service_login_success() {
 
     // Sign up the user first
     let signup_result = auth_service
-        .signup(
-            authen::auth_service::SignupMethod::Credentials {
-                identifier: "test_user".to_string(),
-                password: "plain_password".to_string(),
-            },
-        )
+        .signup(authen::auth_service::SignupMethod::Credentials {
+            identifier: "test_user".to_string(),
+            password: "plain_password".to_string(),
+        })
         .await;
     assert!(signup_result.is_ok());
 
     // Now test login with correct credentials
     let login_result = auth_service
-        .login(
-            authen::auth_service::LoginMethod::Credentials {
-                identifier: "test_user".to_string(),
-                password: "plain_password".to_string(),
-            },
-        )
+        .login(authen::auth_service::LoginMethod::Credentials {
+            identifier: "test_user".to_string(),
+            password: "plain_password".to_string(),
+        })
         .await;
     assert!(login_result.is_ok());
 }
@@ -120,12 +114,10 @@ async fn test_auth_service_login_invalid_credentials() {
     let auth_service = authen::AuthService::default();
 
     let result = auth_service
-        .login(
-            authen::auth_service::LoginMethod::Credentials {
-                identifier: "nonexistent_user".to_string(),
-                password: "wrong_password".to_string(),
-            },
-        )
+        .login(authen::auth_service::LoginMethod::Credentials {
+            identifier: "nonexistent_user".to_string(),
+            password: "wrong_password".to_string(),
+        })
         .await;
     assert!(result.is_err());
     assert_eq!(
