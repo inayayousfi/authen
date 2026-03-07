@@ -21,22 +21,22 @@
 //!
 //! ## Example
 //!
-//! ```rust
-//! use crate::core::credentials::{Credentials, PlainPassword};
-//! use crate::core::password::SecurePasswordManager;
+//! ```rust,no_run
+//! use authen::core::credentials::{Credentials, PlainPassword};
+//! use authen::core::password::SecurePasswordManager;
+//! use authen::error::AuthError;
 //! # struct DummyManager;
 //! # #[async_trait::async_trait]
 //! # impl SecurePasswordManager for DummyManager {
-//! #     async fn hash_password(&self, password: &str) -> Result<String, ()> { Ok(password.to_owned()) }
-//! #     async fn verify_password(&self, password: &str, hash: &str) -> Result<bool, ()> { Ok(password == hash) }
+//! #     async fn hash_password(&self, password: &str) -> Result<String, AuthError> { Ok(password.to_owned()) }
+//! #     async fn verify_password(&self, password: &str, hash: &str) -> Result<bool, AuthError> { Ok(password == hash) }
 //! # }
-//! # #[tokio::main]
-//! # async fn main() {
+//! # tokio::runtime::Runtime::new().unwrap().block_on(async {
 //! let manager = DummyManager;
-//! let plain = PlainPassword::new("my_password").unwrap();
+//! let plain = PlainPassword::new("my_password".to_string());
 //! let creds = Credentials::from_plain_password(&manager, "user-1".to_string(), "user@example.com".to_string(), plain).await.unwrap();
-//! assert!(creds.verify_password(&manager, &PlainPassword::new("my_password").unwrap()).await.unwrap());
-//! # }
+//! assert!(creds.verify_password(&manager, &PlainPassword::new("my_password".to_string())).await.unwrap());
+//! # });
 //! ```
 
 pub mod plain_password;

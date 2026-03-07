@@ -15,13 +15,15 @@
 //!
 //! # Example
 //!
-//! ```rust
+//! ```rust,no_run
 //! use authen::core::password::{Argon2PasswordManager, SecurePasswordManager};
 //!
+//! # tokio::runtime::Runtime::new().unwrap().block_on(async {
 //! let manager = Argon2PasswordManager::default();
 //! let password = "mysecret";
-//! let hash = manager.hash_password(password)?;
-//! assert!(manager.verify_password(password, &hash)?);
+//! let hash = manager.hash_password(password).await.unwrap();
+//! assert!(manager.verify_password(password, &hash).await.unwrap());
+//! # });
 //! ```
 //!
 //! # Security

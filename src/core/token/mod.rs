@@ -14,14 +14,15 @@
 //!
 //! # Example
 //!
-//! ```rust
-//! use crate::core::token::{TokenService, TokenPair};
+//! ```rust,no_run
+//! use authen::core::token::{TokenPair, TokenService};
+//! use authen::error::AuthError;
 //! # struct MyTokenService;
 //! # #[async_trait::async_trait]
 //! # impl TokenService for MyTokenService {
-//! #     async fn generate_token_pair(&self, user_id: &str) -> Result<TokenPair, crate::error::AuthError> { todo!() }
-//! #     async fn validate_access_token(&self, token: &str) -> Result<Box<dyn crate::core::token::claims::Claims + Send + Sync>, crate::error::AuthError> { todo!() }
-//! #     async fn refresh_access_token(&self, refresh_token: &str) -> Result<TokenPair, crate::error::AuthError> { todo!() }
+//! #     async fn generate_token_pair(&self, user_id: &str) -> Result<TokenPair, AuthError> { todo!() }
+//! #     async fn validate_access_token(&self, token: &str) -> Result<Box<dyn authen::core::token::claims::Claims + Send + Sync>, AuthError> { todo!() }
+//! #     async fn refresh_access_token(&self, refresh_token: &str) -> Result<TokenPair, AuthError> { todo!() }
 //! # }
 //! # async fn example() {
 //! let service = MyTokenService;
@@ -60,14 +61,15 @@ pub struct TokenPair {
 ///
 /// # Example
 ///
-/// ```rust
-/// # use crate::core::token::{TokenService, TokenPair};
+/// ```rust,no_run
+/// # use authen::core::token::{TokenPair, TokenService};
+/// # use authen::error::AuthError;
 /// # struct MyTokenService;
 /// # #[async_trait::async_trait]
 /// # impl TokenService for MyTokenService {
-/// #     async fn generate_token_pair(&self, user_id: &str) -> Result<TokenPair, crate::error::AuthError> { todo!() }
-/// #     async fn validate_access_token(&self, token: &str) -> Result<Box<dyn crate::core::token::claims::Claims + Send + Sync>, crate::error::AuthError> { todo!() }
-/// #     async fn refresh_access_token(&self, refresh_token: &str) -> Result<TokenPair, crate::error::AuthError> { todo!() }
+/// #     async fn generate_token_pair(&self, user_id: &str) -> Result<TokenPair, AuthError> { todo!() }
+/// #     async fn validate_access_token(&self, token: &str) -> Result<Box<dyn authen::core::token::claims::Claims + Send + Sync>, AuthError> { todo!() }
+/// #     async fn refresh_access_token(&self, refresh_token: &str) -> Result<TokenPair, AuthError> { todo!() }
 /// # }
 /// ```
 #[async_trait::async_trait]

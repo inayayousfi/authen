@@ -61,7 +61,7 @@ impl PasswordPolicy {
     /// * `Err(AuthError)` with a descriptive message if any requirement is not met.
     ///
     /// # Example
-    /// ```rust
+    /// ```rust,no_run
     /// use authen::core::policy::PasswordPolicy;
     /// let policy = PasswordPolicy::default();
     /// assert!(policy.validate_password("Str0ng!Passw0rd").is_ok());

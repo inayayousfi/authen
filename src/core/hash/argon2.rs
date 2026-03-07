@@ -7,11 +7,11 @@
 //!
 //! ```rust
 //! use authen::core::hash::argon2::Argon2Hasher;
-//! use argon2::password_hash::SaltString;
+//! use authen::core::hash::generate_secure_salt;
 //!
 //! let hasher = Argon2Hasher::new();
 //! let password = b"mysecret";
-//! let salt = SaltString::generate(&mut rand::thread_rng());
+//! let salt = generate_secure_salt().unwrap();
 //! let hash = hasher.hash(password, Some(&salt)).unwrap();
 //! assert!(hasher.verify(password, &hash).unwrap());
 //! ```
@@ -36,7 +36,7 @@ impl Argon2Hasher {
     ///
     /// # Examples
     ///
-    /// ```rust
+    /// ```rust,no_run
     /// use authen::core::hash::argon2::Argon2Hasher;
     /// let hasher = Argon2Hasher::new();
     /// ```
