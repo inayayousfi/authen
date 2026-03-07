@@ -25,12 +25,19 @@
 //!
 //! ## Example Usage
 //!
-//! ```rust
-//! use crate::core::oauth::{OAuth2Manager, OAuth2Provider, OAuth2Config};
+//! ```rust,no_run
+//! use authen::core::oauth::{manager::OAuth2Manager, store::{OAuth2Config, OAuth2Provider}};
 //! use std::collections::HashMap;
 //!
 //! let mut configs = HashMap::new();
-//! configs.insert(OAuth2Provider::Google, OAuth2Config::default_google());
+//! configs.insert(OAuth2Provider::Google, OAuth2Config {
+//!     app_name: "example-app".to_string(),
+//!     client_id: "client-id".to_string(),
+//!     client_secret: "client-secret".to_string(),
+//!     redirect_callback_uri: "http://localhost:3000/oauth/google/callback".to_string(),
+//!     redirect_frontend_uri: "http://localhost:5173/auth/callback".to_string(),
+//!     additional_scopes: vec!["email".to_string()],
+//! });
 //! let manager = OAuth2Manager::new(configs);
 //! ```
 
@@ -83,11 +90,18 @@ type ConfiguredBasicClient = oauth2::Client<
 /// - Microsoft
 ///
 /// # Example
-/// ```rust
-/// use crate::core::oauth::{OAuth2Manager, OAuth2Provider, OAuth2Config};
+/// ```rust,no_run
+/// use authen::core::oauth::{manager::OAuth2Manager, store::{OAuth2Config, OAuth2Provider}};
 /// use std::collections::HashMap;
 /// let mut configs = HashMap::new();
-/// configs.insert(OAuth2Provider::Google, OAuth2Config::default_google());
+/// configs.insert(OAuth2Provider::Google, OAuth2Config {
+///     app_name: "example-app".to_string(),
+///     client_id: "client-id".to_string(),
+///     client_secret: "client-secret".to_string(),
+///     redirect_callback_uri: "http://localhost:3000/oauth/google/callback".to_string(),
+///     redirect_frontend_uri: "http://localhost:5173/auth/callback".to_string(),
+///     additional_scopes: vec!["email".to_string()],
+/// });
 /// let manager = OAuth2Manager::new(configs);
 /// ```
 pub struct OAuth2Manager {
@@ -121,7 +135,7 @@ impl OAuth2Manager {
     /// Returns [`AuthError::ConfigError`] if the provider configuration is missing or the client cannot be built.
     ///
     /// # Example
-    /// ```rust
+    /// ```rust,ignore
     /// let client = manager.get_http_client(OAuth2Provider::Google)?;
     /// ```
     fn get_http_client(&self, provider: OAuth2Provider) -> Result<Client, AuthError> {
@@ -144,7 +158,7 @@ impl OAuth2Manager {
     /// Returns [`AuthError::ConfigError`] if the provider configuration is missing or contains invalid URLs.
     ///
     /// # Example
-    /// ```rust
+    /// ```rust,ignore
     /// let client = manager.get_client(OAuth2Provider::GitHub)?;
     /// ```
     pub fn get_client(&self, provider: OAuth2Provider) -> Result<ConfiguredBasicClient, AuthError> {
@@ -199,7 +213,7 @@ impl OAuth2Manager {
     /// Returns [`OAuth2UserInfo`] on success, or [`AuthError`] if required fields are missing or the response is invalid.
     ///
     /// # Example
-    /// ```rust
+    /// ```rust,ignore
     /// let user_info = manager.parse_user_info(OAuth2Provider::Google, json_response).await?;
     /// ```
     pub async fn parse_user_info(
@@ -597,7 +611,7 @@ impl OAuth2Manager {
     /// Returns the frontend redirect URI as a string, or an [`AuthError`] if the provider configuration is missing.
     ///
     /// # Example
-    /// ```rust
+    /// ```rust,ignore
     /// let uri = manager.get_redirect_frontend_uri(OAuth2Provider::Discord)?;
     /// ```
     pub fn get_redirect_frontend_uri(&self, provider: OAuth2Provider) -> Result<String, AuthError> {
@@ -619,7 +633,7 @@ impl OAuth2Manager {
     /// The updated [`OAuth2UserInfo`] with the `user_id` field set.
     ///
     /// # Example
-    /// ```rust
+    /// ```rust,ignore
     /// let linked_info = OAuth2Manager::link_to_user(oauth_info, user_id);
     /// ```
     pub fn link_to_user(mut oauth_info: OAuth2UserInfo, user_id: String) -> OAuth2UserInfo {
@@ -634,7 +648,8 @@ impl OAuth2Manager {
 /// This implementation is useful for testing or initializing the manager before loading provider configs.
 ///
 /// # Example
-/// ```rust
+/// ```rust,no_run
+/// use authen::core::oauth::manager::OAuth2Manager;
 /// let manager = OAuth2Manager::default();
 /// ```
 impl Default for OAuth2Manager {

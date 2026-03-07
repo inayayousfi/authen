@@ -24,7 +24,8 @@ impl InMemoryUserRepo {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```rust,no_run
+    /// use authen::core::user::persistence::InMemoryUserRepo;
     /// let repo = InMemoryUserRepo::new();
     /// ```
     pub fn new() -> Self {

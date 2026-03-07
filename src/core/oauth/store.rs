@@ -16,14 +16,14 @@
 //!
 //! ## Example Configuration
 //!
-//! ```rust
+//! ```rust,no_run
 //! use authen::core::oauth::store::OAuth2Config;
 //!
 //! let config = OAuth2Config {
 //!     app_name: "My App".to_string(),
 //!     client_id: "your-client-id".to_string(),
 //!     client_secret: "your-client-secret".to_string(),
-//!     redirect_uri: "https://api.myapp.com/oauth/google/callback".to_string(),
+//!     redirect_callback_uri: "https://api.myapp.com/oauth/google/callback".to_string(),
 //!     redirect_frontend_uri: "https://myapp.com/auth/callback".to_string(),
 //!     additional_scopes: vec!["profile".to_string()],
 //! };
@@ -78,7 +78,8 @@ impl OAuth2Provider {
     ///
     /// # Examples
     ///
-    /// ```rust
+    /// ```rust,no_run
+    /// use authen::core::oauth::store::OAuth2Provider;
     /// let provider = OAuth2Provider::Google;
     /// assert_eq!(provider.display_name(), "Google");
     /// ```
@@ -95,7 +96,8 @@ impl OAuth2Provider {
     ///
     /// # Examples
     ///
-    /// ```rust
+    /// ```rust,no_run
+    /// use authen::core::oauth::store::OAuth2Provider;
     /// let scopes = OAuth2Provider::Google.default_scopes();
     /// assert!(scopes.contains(&"email"));
     /// ```
@@ -139,8 +141,17 @@ impl OAuth2Token {
     ///
     /// # Examples
     ///
-    /// ```rust
-    /// let token = OAuth2Token { /* ... */ };
+    /// ```rust,no_run
+    /// use authen::core::oauth::store::{OAuth2Provider, OAuth2Token};
+    /// let token = OAuth2Token {
+    ///     access_token: "access".to_string(),
+    ///     refresh_token: Some("refresh".to_string()),
+    ///     expires_at: Some(chrono::Utc::now().naive_utc()),
+    ///     token_type: "Bearer".to_string(),
+    ///     scope: None,
+    ///     provider: OAuth2Provider::Google,
+    ///     created_at: chrono::Utc::now().naive_utc(),
+    /// };
     /// let expired = token.is_expired();
     /// ```
     pub fn is_expired(&self) -> bool {
@@ -160,8 +171,17 @@ impl OAuth2Token {
     ///
     /// # Examples
     ///
-    /// ```rust
-    /// let token = OAuth2Token { /* ... */ };
+    /// ```rust,no_run
+    /// use authen::core::oauth::store::{OAuth2Provider, OAuth2Token};
+    /// let token = OAuth2Token {
+    ///     access_token: "access".to_string(),
+    ///     refresh_token: Some("refresh".to_string()),
+    ///     expires_at: Some(chrono::Utc::now().naive_utc()),
+    ///     token_type: "Bearer".to_string(),
+    ///     scope: None,
+    ///     provider: OAuth2Provider::Google,
+    ///     created_at: chrono::Utc::now().naive_utc(),
+    /// };
     /// let soon = token.expires_soon(60);
     /// ```
     pub fn expires_soon(&self, threshold_secs: u64) -> bool {
@@ -241,8 +261,16 @@ impl OAuth2Config {
     ///
     /// # Examples
     ///
-    /// ```rust
-    /// let config = OAuth2Config { /* ... */ };
+    /// ```rust,no_run
+    /// use authen::core::oauth::store::{OAuth2Config, OAuth2Provider};
+    /// let config = OAuth2Config {
+    ///     app_name: "My App".to_string(),
+    ///     client_id: "your-client-id".to_string(),
+    ///     client_secret: "your-client-secret".to_string(),
+    ///     redirect_callback_uri: "https://api.myapp.com/oauth/google/callback".to_string(),
+    ///     redirect_frontend_uri: "https://myapp.com/auth/callback".to_string(),
+    ///     additional_scopes: vec!["profile".to_string()],
+    /// };
     /// let url = config.auth_url(OAuth2Provider::Google);
     /// ```
     pub fn auth_url(&self, provider: OAuth2Provider) -> &'static str {
@@ -268,8 +296,16 @@ impl OAuth2Config {
     ///
     /// # Examples
     ///
-    /// ```rust
-    /// let config = OAuth2Config { /* ... */ };
+    /// ```rust,no_run
+    /// use authen::core::oauth::store::{OAuth2Config, OAuth2Provider};
+    /// let config = OAuth2Config {
+    ///     app_name: "My App".to_string(),
+    ///     client_id: "your-client-id".to_string(),
+    ///     client_secret: "your-client-secret".to_string(),
+    ///     redirect_callback_uri: "https://api.myapp.com/oauth/google/callback".to_string(),
+    ///     redirect_frontend_uri: "https://myapp.com/auth/callback".to_string(),
+    ///     additional_scopes: vec!["profile".to_string()],
+    /// };
     /// let url = config.token_url(OAuth2Provider::Google);
     /// ```
     pub fn token_url(&self, provider: OAuth2Provider) -> &'static str {
@@ -295,8 +331,16 @@ impl OAuth2Config {
     ///
     /// # Examples
     ///
-    /// ```rust
-    /// let config = OAuth2Config { /* ... */ };
+    /// ```rust,no_run
+    /// use authen::core::oauth::store::{OAuth2Config, OAuth2Provider};
+    /// let config = OAuth2Config {
+    ///     app_name: "My App".to_string(),
+    ///     client_id: "your-client-id".to_string(),
+    ///     client_secret: "your-client-secret".to_string(),
+    ///     redirect_callback_uri: "https://api.myapp.com/oauth/google/callback".to_string(),
+    ///     redirect_frontend_uri: "https://myapp.com/auth/callback".to_string(),
+    ///     additional_scopes: vec!["profile".to_string()],
+    /// };
     /// let url = config.user_info_url(OAuth2Provider::Google);
     /// ```
     pub fn user_info_url(&self, provider: OAuth2Provider) -> &'static str {

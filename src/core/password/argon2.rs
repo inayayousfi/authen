@@ -5,10 +5,10 @@
 //!
 //! # Example
 //!
-//! ```rust
-//! use crate::core::password::argon2::Argon2PasswordManager;
-//! use crate::core::password::manager::SecurePasswordManager;
-//! # tokio_test::block_on(async {
+//! ```rust,no_run
+//! use authen::core::password::argon2::Argon2PasswordManager;
+//! use authen::core::password::manager::SecurePasswordManager;
+//! # tokio::runtime::Runtime::new().unwrap().block_on(async {
 //! let manager = Argon2PasswordManager::default();
 //! let password = "mysecret";
 //! let hash = manager.hash_password(password).await.unwrap();

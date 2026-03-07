@@ -9,8 +9,8 @@
 //! - Custom error handling for token operations
 //!
 //! # Example
-//! ```rust
-//! use crate::core::token::jwt::JwtTokenService;
+//! ```rust,no_run
+//! use authen::core::token::jwt::JwtTokenService;
 //! let jwt_service = JwtTokenService::new("mysecret", 3600, 86400);
 //! ```
 
@@ -46,7 +46,8 @@ impl JwtTokenService {
     /// * `refresh_token_duration` - Refresh token validity duration in seconds.
     ///
     /// # Example
-    /// ```rust
+    /// ```rust,no_run
+    /// use authen::core::token::jwt::JwtTokenService;
     /// let service = JwtTokenService::new("mysecret", 3600, 86400);
     /// ```
     pub fn new(secret: &str, access_token_duration: u64, refresh_token_duration: u64) -> Self {

@@ -8,7 +8,7 @@
 //! # Examples
 //!
 //! Creating a user with already hashed credentials:
-//! ```rust
+//! ```rust,no_run
 //! use authen::core::user::User;
 //! use authen::core::credentials::Credentials;
 //! let credentials = Credentials::default();

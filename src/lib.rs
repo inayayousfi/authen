@@ -16,7 +16,7 @@
 //! - `web`: Enables Axum web server integration for HTTP APIs.
 //!
 //! ## Example
-//! ```rust
+//! ```rust,no_run
 //! use authen::{AuthService, AuthenUser};
 //! // ...
 //! ```
