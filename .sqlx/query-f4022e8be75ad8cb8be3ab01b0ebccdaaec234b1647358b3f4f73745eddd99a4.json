@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT user_id FROM cryptic_credentials WHERE identifier = $1",
+  "query": "SELECT user_id FROM authen_oauth_accounts WHERE provider = $1 AND provider_user_id = $2",
   "describe": {
     "columns": [
       {
@@ -11,6 +11,7 @@
     ],
     "parameters": {
       "Left": [
+        "Text",
         "Text"
       ]
     },
@@ -18,5 +19,5 @@
       false
     ]
   },
-  "hash": "50130dfe2fba648b723305b34e5dbdb342f1d30deb3d55833d93e793c2d6dbe2"
+  "hash": "f4022e8be75ad8cb8be3ab01b0ebccdaaec234b1647358b3f4f73745eddd99a4"
 }

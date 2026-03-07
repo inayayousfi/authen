@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "UPDATE cryptic_users SET updated_at = $1 WHERE id = $2",
+  "query": "UPDATE authen_users SET updated_at = $1 WHERE id = $2",
   "describe": {
     "columns": [],
     "parameters": {
@@ -11,5 +11,5 @@
     },
     "nullable": []
   },
-  "hash": "912237f5d3627db6cf71dbbaa879c9cee82529eebfd5dcb97ffa2e451853e70d"
+  "hash": "05b39a6aee0d5b57191ce94b5b98f2ae919f4ff59604644dab3c8af0132d005d"
 }

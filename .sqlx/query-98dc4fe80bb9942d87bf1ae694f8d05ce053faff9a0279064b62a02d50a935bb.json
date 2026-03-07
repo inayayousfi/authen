@@ -1,22 +1,22 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT user_id, identifier, password_hash FROM cryptic_credentials WHERE user_id = $1",
+  "query": "SELECT id, created_at, updated_at FROM authen_users WHERE id = $1",
   "describe": {
     "columns": [
       {
         "ordinal": 0,
-        "name": "user_id",
+        "name": "id",
         "type_info": "Uuid"
       },
       {
         "ordinal": 1,
-        "name": "identifier",
-        "type_info": "Varchar"
+        "name": "created_at",
+        "type_info": "Timestamp"
       },
       {
         "ordinal": 2,
-        "name": "password_hash",
-        "type_info": "Varchar"
+        "name": "updated_at",
+        "type_info": "Timestamp"
       }
     ],
     "parameters": {
@@ -30,5 +30,5 @@
       false
     ]
   },
-  "hash": "cbddef02f327a14352d835828d5a9405d05feaa23883a554b387f0d3228218c5"
+  "hash": "98dc4fe80bb9942d87bf1ae694f8d05ce053faff9a0279064b62a02d50a935bb"
 }

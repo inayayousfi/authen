@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT provider, provider_user_id, email, name, avatar_url, verified_email, locale, updated_at, raw_data\n               FROM cryptic_oauth_accounts WHERE user_id = $1",
+  "query": "SELECT provider, provider_user_id, email, name, avatar_url, verified_email, locale, updated_at, raw_data\n               FROM authen_oauth_accounts WHERE user_id = $1",
   "describe": {
     "columns": [
       {
@@ -66,5 +66,5 @@
       true
     ]
   },
-  "hash": "645c0a982a51ccf4c7ff18c118af9c1a0a52b8cdf046f975b44515ad0f2edee2"
+  "hash": "3157ea19e590795a9ce42a0e0db3b1ef052ebf888743e6204d5e9eec26df6e59"
 }

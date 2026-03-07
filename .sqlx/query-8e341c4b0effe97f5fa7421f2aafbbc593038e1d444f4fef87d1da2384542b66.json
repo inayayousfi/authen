@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "UPDATE cryptic_credentials SET identifier = $1, password_hash = $2 WHERE user_id = $3",
+  "query": "UPDATE authen_credentials SET identifier = $1, password_hash = $2 WHERE user_id = $3",
   "describe": {
     "columns": [],
     "parameters": {
@@ -12,5 +12,5 @@
     },
     "nullable": []
   },
-  "hash": "7c6737d409233508b72e4eea67c6bc5e63e3ba811157cb4f1aa25793cd2fc5bd"
+  "hash": "8e341c4b0effe97f5fa7421f2aafbbc593038e1d444f4fef87d1da2384542b66"
 }

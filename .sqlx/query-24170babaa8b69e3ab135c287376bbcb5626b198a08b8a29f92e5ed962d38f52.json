@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "INSERT INTO cryptic_credentials (user_id, identifier, password_hash) VALUES ($1, $2, $3)",
+  "query": "INSERT INTO authen_credentials (user_id, identifier, password_hash) VALUES ($1, $2, $3)",
   "describe": {
     "columns": [],
     "parameters": {
@@ -12,5 +12,5 @@
     },
     "nullable": []
   },
-  "hash": "3683a264357441626d2695990b7ad98a4106596053c0aabbf39a780e8bab4e7d"
+  "hash": "24170babaa8b69e3ab135c287376bbcb5626b198a08b8a29f92e5ed962d38f52"
 }

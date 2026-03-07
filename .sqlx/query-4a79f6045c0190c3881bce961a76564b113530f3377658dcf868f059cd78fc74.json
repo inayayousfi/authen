@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "DELETE FROM cryptic_users WHERE id = $1",
+  "query": "DELETE FROM authen_users WHERE id = $1",
   "describe": {
     "columns": [],
     "parameters": {
@@ -10,5 +10,5 @@
     },
     "nullable": []
   },
-  "hash": "2cd36fe883f7ad6d61ffd6c3371a8860c05ba134dfd639b697b635220fda0110"
+  "hash": "4a79f6045c0190c3881bce961a76564b113530f3377658dcf868f059cd78fc74"
 }
