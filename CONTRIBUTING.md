@@ -1,6 +1,6 @@
-# Contribution Guide for `cryptic`
+# Contribution Guide for `authen`
 
-We are delighted that you are interested in contributing to the `cryptic` crate! Your help is invaluable in making this library a secure foundation for Rust applications.
+We are delighted that you are interested in contributing to the `authen` crate! Your help is invaluable in making this library a secure foundation for Rust applications.
 
 ## Before Contributing
 
@@ -10,12 +10,12 @@ We are delighted that you are interested in contributing to the `cryptic` crate!
 
 ## How to Contribute
 
-1. **Fork the Repository**: Start by forking the `cryptic` repository to your GitHub account.
+1. **Fork the Repository**: Start by forking the `authen` repository to your GitHub account.
 2. **Clone Your Fork**:
 
     ```bash
-    git clone https://github.com/your-username/cryptic.git
-    cd cryptic
+    git clone https://github.com/your-username/authen.git
+    cd authen
     ```
 
 3. **Create a New Branch**:

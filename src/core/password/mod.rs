@@ -16,7 +16,7 @@
 //! # Example
 //!
 //! ```rust
-//! use cryptic::core::password::{Argon2PasswordManager, SecurePasswordManager};
+//! use authen::core::password::{Argon2PasswordManager, SecurePasswordManager};
 //!
 //! let manager = Argon2PasswordManager::default();
 //! let password = "mysecret";

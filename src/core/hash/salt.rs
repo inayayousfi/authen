@@ -6,7 +6,7 @@
 //! # Example
 //!
 //! ```rust
-//! use cryptic::core::hash::salt::generate_secure_salt;
+//! use authen::core::hash::salt::generate_secure_salt;
 //!
 //! let salt = generate_secure_salt().expect("Failed to generate salt");
 //! println!("Salt: {}", salt.as_str());
@@ -27,7 +27,7 @@ use rand::{TryRngCore, rngs::OsRng};
 /// # Example
 ///
 /// ```rust
-/// use cryptic::core::hash::salt::generate_secure_salt;
+/// use authen::core::hash::salt::generate_secure_salt;
 /// let salt = generate_secure_salt().expect("Failed to generate salt");
 /// println!("Salt: {}", salt.as_str());
 /// ```

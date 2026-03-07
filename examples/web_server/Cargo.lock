@@ -976,7 +976,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "narangcia-cryptic"
+name = "authen"
 version = "0.3.0"
 dependencies = [
  "argon2",
@@ -2192,7 +2192,7 @@ name = "web_server"
 version = "0.1.0"
 dependencies = [
  "env_logger",
- "narangcia-cryptic",
+ "authen",
  "tokio",
 ]
 

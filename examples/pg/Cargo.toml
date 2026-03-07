@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-narangcia-cryptic-auth = { path = "../..", features = ["postgres"] }
+authen = { path = "../..", features = ["postgres"] }
 sqlx = { version = "0.8.6", features = ["runtime-async-std", "postgres"] }
 tokio = { version = "1.47.1", features = ["full"] }

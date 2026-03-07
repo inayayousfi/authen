@@ -9,7 +9,7 @@
 //! cargo run --manifest-path examples/pg/Cargo.toml -- <DATABASE_URL> <command> [args]
 //! ```
 //!
-//! - `<DATABASE_URL>`: The Postgres connection string (e.g., `postgres://user:password@localhost:5432/cryptic`)
+//! - `<DATABASE_URL>`: The Postgres connection string (e.g., `postgres://user:password@localhost:5432/authen`)
 //! - `<command>`: One of the supported commands (see below)
 //! - `[args]`: Additional arguments required by the command
 //!
@@ -18,7 +18,7 @@
 //! - `check_schema`: Validates the database schema for the user repository.
 //!   - Example:
 //!     ```sh
-//!     cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/cryptic" check_schema
+//!     cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/authen" check_schema
 //!     ```
 //!
 //! - `add_user <id> <identifier> <password_hash>`: Adds a new user to the repository.
@@ -27,35 +27,35 @@
 //!   - `<password_hash>`: The hashed password for the user
 //!   - Example:
 //!     ```sh
-//!     cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/cryptic" add_user 11111111-1111-1111-1111-111111111111 alice@example.com myhashedpassword
+//!     cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/authen" add_user 11111111-1111-1111-1111-111111111111 alice@example.com myhashedpassword
 //!     ```
 //!
 //! - `get_user_by_id <id>`: Retrieves a user by their UUID.
 //!   - Example:
 //!     ```sh
-//!     cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/cryptic" get_user_by_id 11111111-1111-1111-1111-111111111111
+//!     cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/authen" get_user_by_id 11111111-1111-1111-1111-111111111111
 //!     ```
 //!
 //! - `get_user_by_identifier <identifier>`: Retrieves a user by their identifier (e.g., email).
 //!   - Example:
 //!     ```sh
-//!     cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/cryptic" get_user_by_identifier alice@example.com
+//!     cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/authen" get_user_by_identifier alice@example.com
 //!     ```
 //!
 //! ## Example
 //!
 //! ```sh
 //! # Check schema
-//! cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/cryptic" check_schema
+//! cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/authen" check_schema
 //!
 //! # Add a user
-//! cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/cryptic" add_user 11111111-1111-1111-1111-111111111111 alice@example.com myhashedpassword
+//! cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/authen" add_user 11111111-1111-1111-1111-111111111111 alice@example.com myhashedpassword
 //!
 //! # Get user by ID
-//! cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/cryptic" get_user_by_id 11111111-1111-1111-1111-111111111111
+//! cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/authen" get_user_by_id 11111111-1111-1111-1111-111111111111
 //!
 //! # Get user by identifier
-//! cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/cryptic" get_user_by_identifier alice@example.com
+//! cargo run --manifest-path examples/pg/Cargo.toml -- "postgres://myuser:mypassword@localhost:5432/authen" get_user_by_identifier alice@example.com
 //! ```
 //!
 //! ## Notes
@@ -68,8 +68,8 @@
 //!
 //! See the project README for more details.
 
-use narangcia_cryptic_auth::core::user::persistence::traits::UserRepository;
-use narangcia_cryptic_auth::{core::user::User, postgres::PgUserRepo};
+use authen::core::user::persistence::traits::UserRepository;
+use authen::{core::user::User, postgres::PgUserRepo};
 use sqlx::PgConnection;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
@@ -117,7 +117,7 @@ async fn main() {
             }
             let user = User {
                 id: args[3].clone(),
-                credentials: narangcia_cryptic_auth::core::credentials::Credentials {
+                credentials: authen::core::credentials::Credentials {
                     user_id: args[3].clone(),
                     identifier: args[4].clone(),
                     password_hash: args[5].clone(),

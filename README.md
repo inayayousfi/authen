@@ -1,6 +1,8 @@
-# `cryptic`
+# `authen`
 
 A robust and secure Rust crate for authentication, meticulously designed to provide a solid foundation for your applications. This library aims to deliver reliable and easy-to-use authentication primitives.
+
+Note: this project was previously named cryptic auth.
 
 ## Features
 
@@ -20,7 +22,7 @@ Add this line to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-narangcia-cryptic = { version = "0.3.0", features = ["full"] }
+authen = { version = "0.3.0", features = ["full"] }
 ```
 
 ## Development

@@ -1,4 +1,4 @@
-//! Web server and HTTP API integration for Cryptic using Axum.
+//! Web server and HTTP API integration for Authen using Axum.
 //!
 //! This module provides the Axum-based web server and HTTP API endpoints for authentication,
 //! user management, token operations, and OAuth2 integration. It exposes routes for signup,
@@ -346,8 +346,8 @@
 //!
 //! # Server Setup Example
 //! ```no_run
-//! use cryptic::auth_service::AuthService;
-//! use cryptic::web_axum::start_server;
+//! use authen::auth_service::AuthService;
+//! use authen::web_axum::start_server;
 //! use std::sync::Arc;
 //! # async fn run(auth_service: Arc<AuthService>) {
 //!     start_server(auth_service, None).await;
@@ -393,7 +393,7 @@ pub async fn start_server(
 ) {
     use axum::serve;
     use tokio::net::TcpListener;
-    let app = get_cryptic_axum_router(auth_service.clone());
+    let app = get_authen_axum_router(auth_service.clone());
 
     let addr = address
         .into()
@@ -404,9 +404,9 @@ pub async fn start_server(
 }
 
 #[cfg(feature = "axum")]
-/// Returns an Axum `Router` with all Cryptic authentication routes registered.
+/// Returns an Axum `Router` with all Authen authentication routes registered.
 ///
-/// This is useful for integrating Cryptic's API into an existing Axum application or for testing.
+/// This is useful for integrating Authen's API into an existing Axum application or for testing.
 /// Includes all authentication endpoints: credentials-based signup/login, token operations,
 /// and OAuth2 integration with support for Google, GitHub, Discord, and Microsoft.
 ///
@@ -415,7 +415,7 @@ pub async fn start_server(
 ///
 /// # Returns
 /// An Axum `Router` with all authentication, token, and OAuth2 endpoints.
-pub fn get_cryptic_axum_router(auth_service: Arc<AuthService>) -> Router {
+pub fn get_authen_axum_router(auth_service: Arc<AuthService>) -> Router {
     use axum::routing::{get, post};
     Router::new()
         .route("/signup", post(signup_handler))

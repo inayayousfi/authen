@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-narangcia-cryptic-auth = { path = "../..", features = ["web"] }
+authen = { path = "../..", features = ["web"] }
 tokio = { version = "1.47.1", features = ["full"] }
 env_logger = "0.11.8"

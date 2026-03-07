@@ -73,7 +73,7 @@ pub enum SignupMethod {
 ///
 /// # Examples
 /// ```rust
-/// use cryptic::auth_service::AuthService;
+/// use authen::auth_service::AuthService;
 /// let service = AuthService::default();
 /// ```
 ///

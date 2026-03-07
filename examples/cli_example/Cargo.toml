@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 clap = { version = "4.5.42", features = ["derive"] }
-narangcia-cryptic-auth = { path = "../..", features = ["bare"] }
+authen = { path = "../..", features = ["bare"] }
 tokio = { version = "1.47.1", features = ["full"] }
 uuid = { version = "1.17.0", features = ["serde", "v4"] }
 env_logger = "0.11.8"

@@ -7,7 +7,7 @@
 //! # Example
 //!
 //! ```rust
-//! use cryptic::core::policy::PasswordPolicy;
+//! use authen::core::policy::PasswordPolicy;
 //!
 //! let policy = PasswordPolicy::default();
 //! assert!(policy.validate_password("Str0ng!Passw0rd").is_ok());
@@ -62,7 +62,7 @@ impl PasswordPolicy {
     ///
     /// # Example
     /// ```rust
-    /// use cryptic::core::policy::PasswordPolicy;
+    /// use authen::core::policy::PasswordPolicy;
     /// let policy = PasswordPolicy::default();
     /// assert!(policy.validate_password("Str0ng!Passw0rd").is_ok());
     /// assert!(policy.validate_password("weak").is_err());

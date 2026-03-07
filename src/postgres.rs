@@ -1,4 +1,4 @@
-//! Postgres-backed user repository implementation for the Cryptic authentication system.
+//! Postgres-backed user repository implementation for the Authen authentication system.
 //!
 //! This module provides the [`PgUserRepo`] struct, which implements the user repository
 //! trait for storing and retrieving user and credential data in a PostgreSQL database.
@@ -22,7 +22,7 @@ use crate::{core::user::User, error::AuthError};
 #[cfg(feature = "postgres")]
 use tokio::sync::Mutex;
 
-/// A PostgreSQL-backed implementation of the user repository for Cryptic.
+/// A PostgreSQL-backed implementation of the user repository for Authen.
 ///
 /// This struct manages a single mutable PostgreSQL connection for user and credential operations.
 /// If you need connection pooling, wrap this repository in a pool-aware struct.
@@ -44,12 +44,12 @@ pub struct PgUserRepo {
 
 #[cfg(feature = "postgres")]
 impl PgUserRepo {
-    /// Checks that the required PostgreSQL schema for Cryptic exists and is valid.
+    /// Checks that the required PostgreSQL schema for Authen exists and is valid.
     ///
     /// This function verifies the existence and structure of the following tables:
-    /// - `cryptic_users`
-    /// - `cryptic_credentials`
-    /// - `cryptic_oauth_accounts`
+    /// - `authen_users`
+    /// - `authen_credentials`
+    /// - `authen_oauth_accounts`
     ///
     /// It checks for required columns, primary keys, unique constraints, and foreign key relationships.
     ///
@@ -64,29 +64,29 @@ impl PgUserRepo {
     /// # Example
     ///
     /// ```rust
-    /// # use cryptic::postgres::PgUserRepo;
+    /// # use authen::postgres::PgUserRepo;
     /// # async fn check(conn: &mut sqlx::PgConnection) {
     /// PgUserRepo::check_schema(conn).await?;
-    /// # Ok::<(), cryptic::error::AuthError>(())
+    /// # Ok::<(), authen::error::AuthError>(())
     /// # }
     /// ```
     pub async fn check_schema(
         conn: &mut sqlx::PgConnection,
     ) -> Result<(), crate::error::AuthError> {
         use sqlx::Row;
-        // Check if the cryptic_users table exists
-        // Check cryptic_users table
-        // Check if the cryptic_users table exists using a connection pool
+        // Check if the authen_users table exists
+        // Check authen_users table
+        // Check if the authen_users table exists using a connection pool
         // Acquire a connection from the pool
-        // Check if the cryptic_users table exists using a connection pool
+        // Check if the authen_users table exists using a connection pool
         let user_cols = sqlx::query(
             r#"SELECT column_name, data_type, is_nullable
                 FROM information_schema.columns
-                WHERE table_name = 'cryptic_users'"#,
+                WHERE table_name = 'authen_users'"#,
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("cryptic_users table missing: {e}")))?;
+        .map_err(|e| AuthError::DatabaseError(format!("authen_users table missing: {e}")))?;
         let mut has_id = false;
         let mut has_created_at = false;
         let mut has_updated_at = false;
@@ -105,31 +105,31 @@ impl PgUserRepo {
         }
         if !has_id {
             return Err(AuthError::DatabaseError(
-                "cryptic_users.id column missing or wrong type".to_string(),
+                "authen_users.id column missing or wrong type".to_string(),
             ));
         }
         if !has_created_at {
             return Err(AuthError::DatabaseError(
-                "cryptic_users.created_at column missing or wrong type".to_string(),
+                "authen_users.created_at column missing or wrong type".to_string(),
             ));
         }
         if !has_updated_at {
             return Err(AuthError::DatabaseError(
-                "cryptic_users.updated_at column missing or wrong type".to_string(),
+                "authen_users.updated_at column missing or wrong type".to_string(),
             ));
         }
 
-        // Check primary key on cryptic_users.id
+        // Check primary key on authen_users.id
         let pk = sqlx::query(
             r#"SELECT kcu.column_name
                 FROM information_schema.table_constraints tc
                 JOIN information_schema.key_column_usage kcu
                   ON tc.constraint_name = kcu.constraint_name
-                WHERE tc.table_name = 'cryptic_users' AND tc.constraint_type = 'PRIMARY KEY'"#,
+                WHERE tc.table_name = 'authen_users' AND tc.constraint_type = 'PRIMARY KEY'"#,
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("cryptic_users PK check failed: {e}")))?;
+        .map_err(|e| AuthError::DatabaseError(format!("authen_users PK check failed: {e}")))?;
         let mut pk_ok = false;
         for row in &pk {
             let col: &str = row.get("column_name");
@@ -139,19 +139,19 @@ impl PgUserRepo {
         }
         if !pk_ok {
             return Err(AuthError::DatabaseError(
-                "cryptic_users.id is not primary key".to_string(),
+                "authen_users.id is not primary key".to_string(),
             ));
         }
 
-        // Check cryptic_credentials table
+        // Check authen_credentials table
         let cred_cols = sqlx::query(
             r#"SELECT column_name, data_type, is_nullable
                 FROM information_schema.columns
-                WHERE table_name = 'cryptic_credentials'"#,
+                WHERE table_name = 'authen_credentials'"#,
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("cryptic_credentials table missing: {e}")))?;
+        .map_err(|e| AuthError::DatabaseError(format!("authen_credentials table missing: {e}")))?;
         let mut has_user_id = false;
         let mut has_identifier = false;
         let mut has_password_hash = false;
@@ -170,21 +170,21 @@ impl PgUserRepo {
         }
         if !has_user_id || !has_identifier || !has_password_hash {
             return Err(AuthError::DatabaseError(
-                "cryptic_credentials columns missing or wrong types".to_string(),
+                "authen_credentials columns missing or wrong types".to_string(),
             ));
         }
 
-        // Check PK on cryptic_credentials.user_id
+        // Check PK on authen_credentials.user_id
         let cred_pk = sqlx::query(
             r#"SELECT kcu.column_name
                 FROM information_schema.table_constraints tc
                 JOIN information_schema.key_column_usage kcu
                   ON tc.constraint_name = kcu.constraint_name
-                WHERE tc.table_name = 'cryptic_credentials' AND tc.constraint_type = 'PRIMARY KEY'"#
+                WHERE tc.table_name = 'authen_credentials' AND tc.constraint_type = 'PRIMARY KEY'"#
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("cryptic_credentials PK check failed: {e}")))?;
+        .map_err(|e| AuthError::DatabaseError(format!("authen_credentials PK check failed: {e}")))?;
         let mut cred_pk_ok = false;
         for row in &cred_pk {
             let col: &str = row.get("column_name");
@@ -194,7 +194,7 @@ impl PgUserRepo {
         }
         if !cred_pk_ok {
             return Err(AuthError::DatabaseError(
-                "cryptic_credentials.user_id is not primary key".to_string(),
+                "authen_credentials.user_id is not primary key".to_string(),
             ));
         }
 
@@ -204,13 +204,13 @@ impl PgUserRepo {
                 FROM information_schema.table_constraints tc
                 JOIN information_schema.constraint_column_usage ccu
                   ON tc.constraint_name = ccu.constraint_name
-                WHERE tc.table_name = 'cryptic_credentials' AND tc.constraint_type = 'UNIQUE' AND ccu.column_name = 'identifier'"#
+                WHERE tc.table_name = 'authen_credentials' AND tc.constraint_type = 'UNIQUE' AND ccu.column_name = 'identifier'"#
         )
         .fetch_one(&mut *conn)
         .await
-        .map_err(|_| AuthError::DatabaseError("cryptic_credentials.identifier is not unique".to_string()))?;
+        .map_err(|_| AuthError::DatabaseError("authen_credentials.identifier is not unique".to_string()))?;
 
-        // Check FK from cryptic_credentials.user_id to cryptic_users.id
+        // Check FK from authen_credentials.user_id to authen_users.id
         let fk = sqlx::query(
             r#"SELECT kcu.column_name, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name
                 FROM information_schema.table_constraints tc
@@ -218,36 +218,36 @@ impl PgUserRepo {
                   ON tc.constraint_name = kcu.constraint_name
                 JOIN information_schema.constraint_column_usage ccu
                   ON tc.constraint_name = ccu.constraint_name
-                WHERE tc.table_name = 'cryptic_credentials' AND tc.constraint_type = 'FOREIGN KEY'"#
+                WHERE tc.table_name = 'authen_credentials' AND tc.constraint_type = 'FOREIGN KEY'"#
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("cryptic_credentials FK check failed: {e}")))?;
+        .map_err(|e| AuthError::DatabaseError(format!("authen_credentials FK check failed: {e}")))?;
         let mut fk_ok = false;
         for row in &fk {
             let col: &str = row.get("column_name");
             let ftable: &str = row.get("foreign_table_name");
             let fcol: &str = row.get("foreign_column_name");
-            if col == "user_id" && ftable == "cryptic_users" && fcol == "id" {
+            if col == "user_id" && ftable == "authen_users" && fcol == "id" {
                 fk_ok = true;
             }
         }
         if !fk_ok {
             return Err(AuthError::DatabaseError(
-                "cryptic_credentials.user_id does not reference cryptic_users.id".to_string(),
+                "authen_credentials.user_id does not reference authen_users.id".to_string(),
             ));
         }
 
-        // Check cryptic_oauth_accounts table
+        // Check authen_oauth_accounts table
         let oauth_cols = sqlx::query(
             r#"SELECT column_name, data_type, is_nullable
                 FROM information_schema.columns
-                WHERE table_name = 'cryptic_oauth_accounts'"#,
+                WHERE table_name = 'authen_oauth_accounts'"#,
         )
         .fetch_all(&mut *conn)
         .await
         .map_err(|e| {
-            AuthError::DatabaseError(format!("cryptic_oauth_accounts table missing: {e}"))
+            AuthError::DatabaseError(format!("authen_oauth_accounts table missing: {e}"))
         })?;
 
         let mut has_oauth_user_id = false;
@@ -268,29 +268,29 @@ impl PgUserRepo {
         }
         if !has_oauth_user_id || !has_provider || !has_provider_user_id {
             return Err(AuthError::DatabaseError(
-                "cryptic_oauth_accounts required columns missing or wrong types".to_string(),
+                "authen_oauth_accounts required columns missing or wrong types".to_string(),
             ));
         }
 
-        // Check composite PK on cryptic_oauth_accounts (user_id, provider)
+        // Check composite PK on authen_oauth_accounts (user_id, provider)
         let oauth_pk = sqlx::query(
             r#"SELECT kcu.column_name
                 FROM information_schema.table_constraints tc
                 JOIN information_schema.key_column_usage kcu
                   ON tc.constraint_name = kcu.constraint_name
-                WHERE tc.table_name = 'cryptic_oauth_accounts' AND tc.constraint_type = 'PRIMARY KEY'
+                WHERE tc.table_name = 'authen_oauth_accounts' AND tc.constraint_type = 'PRIMARY KEY'
                 ORDER BY kcu.ordinal_position"#
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("cryptic_oauth_accounts PK check failed: {e}")))?;
+        .map_err(|e| AuthError::DatabaseError(format!("authen_oauth_accounts PK check failed: {e}")))?;
 
         let mut oauth_pk_cols: Vec<String> =
             oauth_pk.iter().map(|row| row.get("column_name")).collect();
         oauth_pk_cols.sort();
         if oauth_pk_cols != vec!["provider", "user_id"] {
             return Err(AuthError::DatabaseError(
-                "cryptic_oauth_accounts composite primary key (user_id, provider) missing"
+                "authen_oauth_accounts composite primary key (user_id, provider) missing"
                     .to_string(),
             ));
         }
@@ -301,13 +301,13 @@ impl PgUserRepo {
                 FROM information_schema.table_constraints tc
                 JOIN information_schema.constraint_column_usage ccu
                   ON tc.constraint_name = ccu.constraint_name
-                WHERE tc.table_name = 'cryptic_oauth_accounts' AND tc.constraint_type = 'UNIQUE'
+                WHERE tc.table_name = 'authen_oauth_accounts' AND tc.constraint_type = 'UNIQUE'
                 ORDER BY ccu.column_name"#,
         )
         .fetch_all(&mut *conn)
         .await
         .map_err(|e| {
-            AuthError::DatabaseError(format!("cryptic_oauth_accounts unique check failed: {e}"))
+            AuthError::DatabaseError(format!("authen_oauth_accounts unique check failed: {e}"))
         })?;
 
         let mut unique_cols: Vec<String> = oauth_unique
@@ -320,12 +320,12 @@ impl PgUserRepo {
             || !unique_cols.contains(&"provider_user_id".to_string())
         {
             return Err(AuthError::DatabaseError(
-                "cryptic_oauth_accounts unique constraint on (provider, provider_user_id) missing"
+                "authen_oauth_accounts unique constraint on (provider, provider_user_id) missing"
                     .to_string(),
             ));
         }
 
-        // Check FK from cryptic_oauth_accounts.user_id to cryptic_users.id
+        // Check FK from authen_oauth_accounts.user_id to authen_users.id
         let oauth_fk = sqlx::query(
             r#"SELECT kcu.column_name, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name
                 FROM information_schema.table_constraints tc
@@ -333,24 +333,24 @@ impl PgUserRepo {
                   ON tc.constraint_name = kcu.constraint_name
                 JOIN information_schema.constraint_column_usage ccu
                   ON tc.constraint_name = ccu.constraint_name
-                WHERE tc.table_name = 'cryptic_oauth_accounts' AND tc.constraint_type = 'FOREIGN KEY'"#
+                WHERE tc.table_name = 'authen_oauth_accounts' AND tc.constraint_type = 'FOREIGN KEY'"#
         )
         .fetch_all(&mut *conn)
         .await
-        .map_err(|e| AuthError::DatabaseError(format!("cryptic_oauth_accounts FK check failed: {e}")))?;
+        .map_err(|e| AuthError::DatabaseError(format!("authen_oauth_accounts FK check failed: {e}")))?;
 
         let mut oauth_fk_ok = false;
         for row in &oauth_fk {
             let col: &str = row.get("column_name");
             let ftable: &str = row.get("foreign_table_name");
             let fcol: &str = row.get("foreign_column_name");
-            if col == "user_id" && ftable == "cryptic_users" && fcol == "id" {
+            if col == "user_id" && ftable == "authen_users" && fcol == "id" {
                 oauth_fk_ok = true;
             }
         }
         if !oauth_fk_ok {
             return Err(AuthError::DatabaseError(
-                "cryptic_oauth_accounts.user_id does not reference cryptic_users.id".to_string(),
+                "authen_oauth_accounts.user_id does not reference authen_users.id".to_string(),
             ));
         }
 
@@ -382,7 +382,7 @@ impl PgUserRepo {
 impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
     /// Adds a new user and their credentials to the database.
     ///
-    /// Inserts a new user record into the `cryptic_users` table, along with associated credentials
+    /// Inserts a new user record into the `authen_users` table, along with associated credentials
     /// and OAuth accounts if provided.
     ///
     /// # Arguments
@@ -403,9 +403,9 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
         let mut conn = self.conn.lock().await;
 
-        // Insert into cryptic_users with timestamps
+        // Insert into authen_users with timestamps
         sqlx::query!(
-            "INSERT INTO cryptic_users (id, created_at, updated_at) VALUES ($1, $2, $3)",
+            "INSERT INTO authen_users (id, created_at, updated_at) VALUES ($1, $2, $3)",
             user_id,
             user.created_at,
             user.updated_at
@@ -420,7 +420,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
                 .map_err(|e| AuthError::DatabaseError(e.to_string()))?;
 
             sqlx::query!(
-                "INSERT INTO cryptic_credentials (user_id, identifier, password_hash) VALUES ($1, $2, $3)",
+                "INSERT INTO authen_credentials (user_id, identifier, password_hash) VALUES ($1, $2, $3)",
                 cred_user_id,
                 credentials.identifier,
                 credentials.password_hash
@@ -445,7 +445,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
                 .map(|data| serde_json::to_value(data).unwrap_or(serde_json::Value::Null));
 
             sqlx::query!(
-                r#"INSERT INTO cryptic_oauth_accounts
+                r#"INSERT INTO authen_oauth_accounts
                    (user_id, provider, provider_user_id, email, name, avatar_url, verified_email, locale, updated_at, raw_data)
                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)"#,
                 user_id,
@@ -469,7 +469,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
     /// Retrieves a user and their credentials by user ID.
     ///
-    /// Looks up a user in the `cryptic_users` table by their UUID, and fetches associated credentials
+    /// Looks up a user in the `authen_users` table by their UUID, and fetches associated credentials
     /// and OAuth accounts.
     ///
     /// # Arguments
@@ -485,7 +485,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
         // Get user basic info
         let user_rec = sqlx::query!(
-            "SELECT id, created_at, updated_at FROM cryptic_users WHERE id = $1",
+            "SELECT id, created_at, updated_at FROM authen_users WHERE id = $1",
             uuid
         )
         .fetch_one(&mut *conn)
@@ -494,7 +494,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
         // Get credentials (if any)
         let credentials = sqlx::query!(
-            "SELECT user_id, identifier, password_hash FROM cryptic_credentials WHERE user_id = $1",
+            "SELECT user_id, identifier, password_hash FROM authen_credentials WHERE user_id = $1",
             uuid
         )
         .fetch_optional(&mut *conn)
@@ -509,7 +509,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
         // Get OAuth accounts
         let oauth_records = sqlx::query!(
             r#"SELECT provider, provider_user_id, email, name, avatar_url, verified_email, locale, updated_at, raw_data
-               FROM cryptic_oauth_accounts WHERE user_id = $1"#,
+               FROM authen_oauth_accounts WHERE user_id = $1"#,
             uuid
         )
         .fetch_all(&mut *conn)
@@ -553,7 +553,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
     /// Retrieves a user and their credentials by identifier (e.g., username or email).
     ///
-    /// Looks up a user by their unique identifier in the `cryptic_credentials` table, then fetches
+    /// Looks up a user by their unique identifier in the `authen_credentials` table, then fetches
     /// the full user record and associated data.
     ///
     /// # Arguments
@@ -568,7 +568,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
         // Get user ID from credentials
         let cred_rec = sqlx::query!(
-            "SELECT user_id FROM cryptic_credentials WHERE identifier = $1",
+            "SELECT user_id FROM authen_credentials WHERE identifier = $1",
             identifier
         )
         .fetch_one(&mut *conn)
@@ -582,8 +582,8 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
     /// Updates a user's credentials and metadata in the database.
     ///
-    /// Updates the `updated_at` timestamp in the `cryptic_users` table, and updates credentials
-    /// in the `cryptic_credentials` table if provided.
+    /// Updates the `updated_at` timestamp in the `authen_users` table, and updates credentials
+    /// in the `authen_credentials` table if provided.
     ///
     /// # Arguments
     ///
@@ -601,7 +601,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
         // Update user's updated_at timestamp
         sqlx::query!(
-            "UPDATE cryptic_users SET updated_at = $1 WHERE id = $2",
+            "UPDATE authen_users SET updated_at = $1 WHERE id = $2",
             user.updated_at,
             user_id
         )
@@ -615,7 +615,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
                 .map_err(|e| AuthError::DatabaseError(e.to_string()))?;
 
             sqlx::query!(
-                "UPDATE cryptic_credentials SET identifier = $1, password_hash = $2 WHERE user_id = $3",
+                "UPDATE authen_credentials SET identifier = $1, password_hash = $2 WHERE user_id = $3",
                 credentials.identifier,
                 credentials.password_hash,
                 cred_user_id
@@ -630,7 +630,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
     /// Deletes a user and their credentials from the database by user ID.
     ///
-    /// Removes the user record from the `cryptic_users` table, along with any associated credentials
+    /// Removes the user record from the `authen_users` table, along with any associated credentials
     /// and OAuth accounts (if foreign key constraints are set to cascade).
     ///
     /// # Arguments
@@ -643,7 +643,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
     async fn delete_user(&self, id: &str) -> Result<(), crate::error::AuthError> {
         let uuid = Uuid::parse_str(id).map_err(|e| AuthError::DatabaseError(e.to_string()))?;
         let mut conn = self.conn.lock().await;
-        sqlx::query!("DELETE FROM cryptic_users WHERE id = $1", uuid)
+        sqlx::query!("DELETE FROM authen_users WHERE id = $1", uuid)
             .execute(&mut *conn)
             .await
             .map_err(|e| AuthError::DatabaseError(e.to_string()))?;
@@ -652,7 +652,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
     /// Retrieves a user by their OAuth provider and provider user ID.
     ///
-    /// Looks up a user in the `cryptic_oauth_accounts` table by provider and provider user ID,
+    /// Looks up a user in the `authen_oauth_accounts` table by provider and provider user ID,
     /// then fetches the full user record and associated data.
     ///
     /// # Arguments
@@ -679,7 +679,7 @@ impl crate::core::user::persistence::traits::UserRepository for PgUserRepo {
 
         // Get user ID from OAuth accounts
         let oauth_rec = sqlx::query!(
-            "SELECT user_id FROM cryptic_oauth_accounts WHERE provider = $1 AND provider_user_id = $2",
+            "SELECT user_id FROM authen_oauth_accounts WHERE provider = $1 AND provider_user_id = $2",
             provider_str,
             provider_user_id
         )

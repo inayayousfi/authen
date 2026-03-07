@@ -1109,7 +1109,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "narangcia-cryptic"
+name = "authen"
 version = "0.2.0"
 dependencies = [
  "argon2",
@@ -1275,7 +1275,7 @@ checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
 name = "pg"
 version = "0.1.0"
 dependencies = [
- "narangcia-cryptic",
+ "authen",
  "sqlx",
  "tokio",
 ]

@@ -1,13 +1,13 @@
-//! # Cryptic Benchmarks
+//! # Authen Benchmarks
 //!
-//! This file contains comprehensive Criterion benchmarks for the `narangcia_cryptic_auth` crate.
+//! This file contains comprehensive Criterion benchmarks for the `authen` crate.
 //! It covers hashing, password management, JWT token operations, user creation, repository operations,
 //! authentication service flows, credentials, and scaling scenarios.
 //!
 //! Each benchmark is grouped and documented for clarity and reproducibility.
 
 use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
-use narangcia_cryptic_auth::{
+use authen::{
     AuthService,
     core::{
         credentials::{Credentials, PlainPassword},
@@ -24,7 +24,7 @@ use std::{hint::black_box, sync::Arc};
 use tokio::runtime::Runtime;
 
 // --- Hash and Salt Benchmarks ---
-/// Benchmark for generating a secure salt using the cryptic core API.
+/// Benchmark for generating a secure salt using the authen core API.
 /// Measures the performance of random salt generation for password hashing.
 fn bench_generate_secure_salt(c: &mut Criterion) {
     c.bench_function("generate_secure_salt", |b| {
@@ -254,7 +254,7 @@ fn bench_auth_service_signup(c: &mut Criterion) {
 
             let result = auth_service
                 .signup(
-                    narangcia_cryptic_auth::auth_service::SignupMethod::Credentials {
+                    authen::auth_service::SignupMethod::Credentials {
                         identifier: format!("bench_signup_username_{uuid}"),
                         password: format!("bench_signup_password_{uuid}"),
                     },
@@ -275,7 +275,7 @@ fn bench_auth_service_login(c: &mut Criterion) {
     rt.block_on(async {
         auth_service
             .signup(
-                narangcia_cryptic_auth::auth_service::SignupMethod::Credentials {
+                authen::auth_service::SignupMethod::Credentials {
                     identifier: "bench_login_user".to_string(),
                     password: "bench_login_password".to_string(),
                 },
@@ -288,7 +288,7 @@ fn bench_auth_service_login(c: &mut Criterion) {
         b.to_async(&rt).iter(|| async {
             let result = auth_service
                 .login(
-                    narangcia_cryptic_auth::auth_service::LoginMethod::Credentials {
+                    authen::auth_service::LoginMethod::Credentials {
                         identifier: black_box("bench_login_user".to_string()),
                         password: black_box("bench_login_password".to_string()),
                     },
@@ -302,7 +302,7 @@ fn bench_auth_service_login(c: &mut Criterion) {
         b.to_async(&rt).iter(|| async {
             let result = auth_service
                 .login(
-                    narangcia_cryptic_auth::auth_service::LoginMethod::Credentials {
+                    authen::auth_service::LoginMethod::Credentials {
                         identifier: black_box("nonexistent_user".to_string()),
                         password: black_box("wrong_password".to_string()),
                     },

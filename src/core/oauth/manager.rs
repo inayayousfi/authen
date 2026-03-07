@@ -225,7 +225,7 @@ impl OAuth2Manager {
                     .to_string();
 
                 Ok(OAuth2UserInfo {
-                    user_id: String::new(), // Will be set when linking to cryptic user
+                    user_id: String::new(), // Will be set when linking to authen user
                     provider,
                     provider_user_id,
                     email,
@@ -258,7 +258,7 @@ impl OAuth2Manager {
                 };
 
                 Ok(OAuth2UserInfo {
-                    user_id: String::new(), // Will be set when linking to cryptic user
+                    user_id: String::new(), // Will be set when linking to authen user
                     provider,
                     provider_user_id,
                     email,
@@ -290,7 +290,7 @@ impl OAuth2Manager {
                 let locale = response_body["locale"].as_str().map(|s| s.to_string());
 
                 Ok(OAuth2UserInfo {
-                    user_id: String::new(), // Will be set when linking to cryptic user
+                    user_id: String::new(), // Will be set when linking to authen user
                     provider,
                     provider_user_id,
                     email,
@@ -315,7 +315,7 @@ impl OAuth2Manager {
                     .to_string();
 
                 Ok(OAuth2UserInfo {
-                    user_id: String::new(), // Will be set when linking to cryptic user
+                    user_id: String::new(), // Will be set when linking to authen user
                     provider,
                     provider_user_id,
                     email,
@@ -607,13 +607,13 @@ impl OAuth2Manager {
         Ok(config.redirect_frontend_uri.clone())
     }
 
-    /// Sets the `user_id` field in [`OAuth2UserInfo`] to link it to a cryptic user.
+    /// Sets the `user_id` field in [`OAuth2UserInfo`] to link it to a authen user.
     ///
     /// This is used to associate an external OAuth2 identity with an internal user account.
     ///
     /// # Arguments
     /// * `oauth_info` - The OAuth user info to update.
-    /// * `user_id` - The cryptic user ID to link to.
+    /// * `user_id` - The authen user ID to link to.
     ///
     /// # Returns
     /// The updated [`OAuth2UserInfo`] with the `user_id` field set.

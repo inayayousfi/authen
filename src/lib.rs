@@ -1,6 +1,6 @@
-//! # Cryptic Authentication Crate
+//! # Authen Authentication Crate
 //!
-//! `cryptic` is a robust and secure authentication library for Rust, designed to provide all the essential building blocks for modern authentication systems.
+//! `authen` is a robust and secure authentication library for Rust, designed to provide all the essential building blocks for modern authentication systems.
 //!
 //! ## Features
 //! - **User Management**: Create, update, and manage user accounts with flexible persistence options.
@@ -17,7 +17,7 @@
 //!
 //! ## Example
 //! ```rust
-//! use cryptic::{AuthService, CrypticUser};
+//! use authen::{AuthService, AuthenUser};
 //! // ...
 //! ```
 //!
@@ -30,9 +30,9 @@
 //!
 //! ## Re-exports
 //! - [`AuthService`]: Main authentication service.
-//! - [`CrypticUser`]: User type.
+//! - [`AuthenUser`]: User type.
 //! - [`AuthError`]: Error type.
-//! - [`get_cryptic_axum_router`], [`start_server`]: Web server utilities (with `web` feature).
+//! - [`get_authen_axum_router`], [`start_server`]: Web server utilities (with `web` feature).
 //!
 //! ## License
 //! See [LICENCE](../LICENCE) for details.
@@ -59,12 +59,12 @@ pub use auth_service::AuthService;
 /// Authentication method enums for unified login and signup.
 pub use auth_service::{LoginMethod, SignupMethod};
 /// User type.
-pub use core::user::User as CrypticUser;
+pub use core::user::User as AuthenUser;
 /// Error type for authentication operations.
 pub use error::AuthError;
 /// Returns an Axum router with authentication endpoints (with `axum` feature).
 #[cfg(feature = "axum")]
-pub use web_axum::get_cryptic_axum_router;
+pub use web_axum::get_authen_axum_router;
 /// Starts the Axum web server (with `axum` feature).
 #[cfg(feature = "axum")]
 pub use web_axum::start_server;

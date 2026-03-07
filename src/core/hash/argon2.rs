@@ -6,7 +6,7 @@
 //! # Examples
 //!
 //! ```rust
-//! use cryptic::core::hash::argon2::Argon2Hasher;
+//! use authen::core::hash::argon2::Argon2Hasher;
 //! use argon2::password_hash::SaltString;
 //!
 //! let hasher = Argon2Hasher::new();
@@ -37,7 +37,7 @@ impl Argon2Hasher {
     /// # Examples
     ///
     /// ```rust
-    /// use cryptic::core::hash::argon2::Argon2Hasher;
+    /// use authen::core::hash::argon2::Argon2Hasher;
     /// let hasher = Argon2Hasher::new();
     /// ```
     pub fn new() -> Self {
@@ -62,7 +62,7 @@ impl Argon2Hasher {
     /// # Examples
     ///
     /// ```rust
-    /// use cryptic::core::hash::argon2::Argon2Hasher;
+    /// use authen::core::hash::argon2::Argon2Hasher;
     /// let hasher = Argon2Hasher::new();
     /// let hash = hasher.hash(b"password", None).unwrap();
     /// ```
@@ -93,7 +93,7 @@ impl Argon2Hasher {
     /// # Examples
     ///
     /// ```rust
-    /// use cryptic::core::hash::argon2::Argon2Hasher;
+    /// use authen::core::hash::argon2::Argon2Hasher;
     /// let hasher = Argon2Hasher::new();
     /// let hash = hasher.hash(b"password", None).unwrap();
     /// assert!(hasher.verify(b"password", &hash).unwrap());

@@ -1,6 +1,6 @@
-//! # Basic CLI Example for Narangcia Cryptic
+//! # Basic CLI Example for Authen
 //!
-//! This example demonstrates the key features of the `narangcia-cryptic` authentication crate
+//! This example demonstrates the key features of the `authen` authentication crate
 //! through a command-line interface.
 //!
 //! ## Features Demonstrated
@@ -52,20 +52,20 @@
 //!
 //! Example interactive session:
 //! ```
-//! cryptic> signup alice
+//! authen> signup alice
 //! Enter password: secret123
 //! ✅ User 'alice' successfully registered!
-//! cryptic> login alice
+//! authen> login alice
 //! Enter password: secret123
 //! ✅ Login successful!
 //! 👤 User ID: 12345678-1234-1234-1234-123456789abc
 //! 🎫 Access Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
 //! 🔄 Refresh Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
-//! cryptic> validate eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+//! authen> validate eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
 //! ✅ Token is valid!
 //! 👤 Subject: 12345678-1234-1234-1234-123456789abc
 //! ⏰ Expires at: 1234567890
-//! cryptic> exit
+//! authen> exit
 //! 👋 Goodbye!
 //! ```
 //!
@@ -78,16 +78,16 @@
 //!
 //! ## Architecture
 //!
-//! This example showcases the modular architecture of `narangcia-cryptic`:
+//! This example showcases the modular architecture of `authen`:
 //! - `AuthService`: Main service orchestrating authentication operations
 //! - `Argon2PasswordManager`: Secure password hashing using Argon2
 //! - `InMemoryUserRepo`: Simple in-memory user storage
 //! - `JwtTokenService`: JWT token generation and validation
 //!
 
-//! # Cryptic CLI Example
+//! # Authen CLI Example
 //!
-//! This file provides a command-line interface (CLI) for demonstrating the key features of the `narangcia-cryptic` authentication crate.
+//! This file provides a command-line interface (CLI) for demonstrating the key features of the `authen` authentication crate.
 //! It supports user registration, login, JWT token validation, token refresh, and an interactive mode for multi-command sessions.
 //!
 //! ## Features
@@ -101,15 +101,15 @@
 //! See the module-level documentation and the `README.md` for detailed usage instructions.
 
 use clap::{Parser, Subcommand};
-use narangcia_cryptic_auth::{AuthService, CrypticUser as User, core::credentials::PlainPassword};
+use authen::{AuthService, AuthenUser as User, core::credentials::PlainPassword};
 use std::io::{self, Write};
 
-/// Command-line interface for the Cryptic authentication service.
+/// Command-line interface for the Authen authentication service.
 ///
 /// Parses CLI arguments and dispatches to the appropriate subcommand.
 #[derive(Parser)]
-#[command(name = "cryptic-cli")]
-#[command(about = "A CLI example for the narangcia-cryptic authentication service")]
+#[command(name = "authen-cli")]
+#[command(about = "A CLI example for the authen authentication service")]
 #[command(version = "0.1.0")]
 struct Cli {
     /// The subcommand to execute
@@ -117,7 +117,7 @@ struct Cli {
     command: Commands,
 }
 
-/// Supported CLI subcommands for the Cryptic authentication service.
+/// Supported CLI subcommands for the Authen authentication service.
 #[derive(Subcommand)]
 enum Commands {
     /// Register a new user with a username and password.
@@ -154,7 +154,7 @@ enum Commands {
     Interactive,
 }
 
-/// Entry point for the Cryptic CLI example.
+/// Entry point for the Authen CLI example.
 ///
 /// Initializes logging, parses CLI arguments, and dispatches to the selected subcommand.
 #[tokio::main]
@@ -226,7 +226,7 @@ async fn signup_user(
     println!("🔐 Creating new user account...");
 
     match auth_service
-        .signup(narangcia_cryptic_auth::auth_service::SignupMethod::Credentials {
+        .signup(authen::auth_service::SignupMethod::Credentials {
             identifier: username.to_string(),
             password: password.to_string(),
         })
@@ -266,7 +266,7 @@ async fn login_user(
     println!("🔑 Attempting to log in...");
 
     match auth_service
-        .login(narangcia_cryptic_auth::auth_service::LoginMethod::Credentials {
+        .login(authen::auth_service::LoginMethod::Credentials {
             identifier: username.to_string(),
             password: password.to_string(),
         })
@@ -352,7 +352,7 @@ async fn refresh_access_token(
 async fn run_interactive_mode(
     auth_service: &AuthService,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    println!("🚀 Welcome to Cryptic Interactive Mode!");
+    println!("🚀 Welcome to Authen Interactive Mode!");
     println!("Available commands:");
     println!("  1. signup <username> - Register a new user");
     println!("  2. login <username> - Login with credentials");
@@ -363,7 +363,7 @@ async fn run_interactive_mode(
     println!();
 
     loop {
-        print!("cryptic> ");
+        print!("authen> ");
         io::stdout().flush()?;
 
         let mut input = String::new();

@@ -259,7 +259,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "env_logger",
- "narangcia-cryptic",
+ "authen",
  "tokio",
  "uuid",
 ]
@@ -530,7 +530,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "narangcia-cryptic"
+name = "authen"
 version = "0.2.0"
 dependencies = [
  "argon2",

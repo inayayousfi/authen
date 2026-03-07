@@ -1,4 +1,4 @@
-//! # Axum Web Server Example for Narangcia Cryptic
+//! # Axum Web Server Example for Authen
 //!
 //! This example demonstrates how to run the authentication service as a web server using [Axum](https://github.com/tokio-rs/axum).
 //!
@@ -103,7 +103,7 @@
 //! ## Example
 //!
 //! ```rust
-//! use narangcia_cryptic_auth::{AuthService, web_axum::start_server};
+//! use authen::{AuthService, web_axum::start_server};
 //! use std::sync::Arc;
 //!
 //! #[tokio::main]
@@ -123,7 +123,7 @@
 //!
 //! The code below shows the entry point for the Axum web server example.
 
-use narangcia_cryptic_auth::{AuthService, web_axum::start_server};
+use authen::{AuthService, web_axum::start_server};
 use std::sync::Arc;
 
 /// Entry point for the Axum web server example.

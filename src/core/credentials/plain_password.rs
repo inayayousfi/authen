@@ -11,7 +11,7 @@
 //! ## Example
 //!
 //! ```rust
-//! use cryptic::core::credentials::plain_password::PlainPassword;
+//! use authen::core::credentials::plain_password::PlainPassword;
 //!
 //! let password = PlainPassword::new("mysecret".to_string());
 //! assert_eq!(password.as_str(), "mysecret");

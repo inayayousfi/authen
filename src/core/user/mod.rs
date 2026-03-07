@@ -9,17 +9,17 @@
 //!
 //! Creating a user with already hashed credentials:
 //! ```rust
-//! use cryptic::core::user::User;
-//! use cryptic::core::credentials::Credentials;
+//! use authen::core::user::User;
+//! use authen::core::credentials::Credentials;
 //! let credentials = Credentials::default();
 //! let user = User::new("user-id".to_string(), credentials);
 //! ```
 //!
 //! Creating a user with a plaintext password (async):
 //! ```ignore
-//! use cryptic::core::user::User;
-//! use cryptic::core::credentials::PlainPassword;
-//! # async fn example(manager: &impl cryptic::core::password::SecurePasswordManager) {
+//! use authen::core::user::User;
+//! use authen::core::credentials::PlainPassword;
+//! # async fn example(manager: &impl authen::core::password::SecurePasswordManager) {
 //! let user = User::with_plain_password(
 //!     manager,
 //!     "user-id".to_string(),
@@ -101,9 +101,9 @@ impl User {
     ///
     /// # Examples
     /// ```ignore
-    /// # use cryptic::core::user::User;
-    /// # use cryptic::core::credentials::PlainPassword;
-    /// # async fn example(manager: &impl cryptic::core::password::SecurePasswordManager) {
+    /// # use authen::core::user::User;
+    /// # use authen::core::credentials::PlainPassword;
+    /// # async fn example(manager: &impl authen::core::password::SecurePasswordManager) {
     /// let user = User::with_plain_password(
     ///     manager,
     ///     "user-id".to_string(),

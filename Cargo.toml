@@ -1,12 +1,12 @@
 [package]
-name = "narangcia-cryptic-auth"
+name = "authen"
 version = "0.3.2"
 edition = "2024"
 description = "A robust, modular, high-level, and secure authentication crate for Rust."
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/narangcia-oss/cryptic-auth"
-documentation = "https://docs.rs/narangcia-cryptic-auth"
+repository = "https://github.com/narangcia-oss/authen"
+documentation = "https://docs.rs/authen"
 keywords = ["auth", "authentication", "security", "jwt", "argon2"]
 categories = ["authentication", "cryptography", "web-programming"]
 

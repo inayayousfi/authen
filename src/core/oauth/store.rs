@@ -17,7 +17,7 @@
 //! ## Example Configuration
 //!
 //! ```rust
-//! use cryptic::core::oauth::store::OAuth2Config;
+//! use authen::core::oauth::store::OAuth2Config;
 //!
 //! let config = OAuth2Config {
 //!     app_name: "My App".to_string(),
