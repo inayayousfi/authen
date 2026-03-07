@@ -1,3 +1,2 @@
-var srcIndex = new Map(JSON.parse('[["narangcia_cryptic_auth",["",[["core",[["credentials",[],["mod.rs","plain_password.rs"]],["hash",[],["argon2.rs","mod.rs","salt.rs"]],["oauth",[],["manager.rs","mod.rs","store.rs"]],["password",[],["argon2.rs","manager.rs","mod.rs"]],["policy",[],["mod.rs"]],["token",[],["claims.rs","jwt.rs","mod.rs"]],["user",[["persistence",[],["in_memory.rs","mod.rs","store.rs","traits.rs"]]],["mod.rs"]],["vars",[],["mod.rs"]]],["mod.rs"]]],["auth_service.rs","error.rs","lib.rs"]]]]'));
-createSrcSidebar();
-//{"start":36,"fragment_lengths":[473]}
+createSrcSidebar('[["authen",["",[["core",[["credentials",[],["mod.rs","plain_password.rs"]],["hash",[],["argon2.rs","mod.rs","salt.rs"]],["oauth",[],["manager.rs","mod.rs","store.rs"]],["password",[],["argon2.rs","manager.rs","mod.rs"]],["policy",[],["mod.rs"]],["token",[],["claims.rs","jwt.rs","mod.rs"]],["user",[["persistence",[],["in_memory.rs","mod.rs","store.rs","traits.rs"]]],["mod.rs"]],["vars",[],["mod.rs"]]],["mod.rs"]]],["auth_service.rs","error.rs","lib.rs"]]]]');
+//{"start":19,"fragment_lengths":[457]}

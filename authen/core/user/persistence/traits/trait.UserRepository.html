@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="An abstraction for user persistence, allowing async CRUD operations on users."><title>UserRepository in authen::core::user::persistence::traits - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-77263533.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="authen" data-themes="" data-resource-suffix="" data-rustdoc-version="1.94.0 (4a4ef493e 2026-03-02)" data-channel="1.94.0" data-search-js="search-9e2438ea.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-c38705f0.js" ><script src="../../../../../static.files/storage-e2aeef58.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../../../static.files/main-7bab91a1.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-ffcac47a.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">UserRepository</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../../../authen/index.html">authen</a><span class="version">0.3.2</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">User<wbr>Repository</a></h2><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.add_user" title="add_user">add_user</a></li><li><a href="#tymethod.delete_user" title="delete_user">delete_user</a></li><li><a href="#tymethod.get_user_by_id" title="get_user_by_id">get_user_by_id</a></li><li><a href="#tymethod.get_user_by_identifier" title="get_user_by_identifier">get_user_by_identifier</a></li><li><a href="#tymethod.get_user_by_oauth_id" title="get_user_by_oauth_id">get_user_by_oauth_id</a></li><li><a href="#tymethod.update_user" title="update_user">update_user</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2><a href="index.html">In authen::<wbr>core::<wbr>user::<wbr>persistence::<wbr>traits</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../../../index.html">authen</a>::<wbr><a href="../../../index.html">core</a>::<wbr><a href="../../index.html">user</a>::<wbr><a href="../index.html">persistence</a>::<wbr><a href="index.html">traits</a></div><h1>Trait <span class="trait">User<wbr>Repository</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../../../src/authen/core/user/persistence/traits.rs.html#11-76">Source</a> </span></div><pre class="rust item-decl"><code>pub trait UserRepository: <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> {
+    // Required methods
+    fn <a href="#tymethod.add_user" class="fn">add_user</a>&lt;'life0, 'async_trait&gt;(
+        &amp;'life0 self,
+        user: <a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>, <a class="enum" href="../../../../error/enum.AuthError.html" title="enum authen::error::AuthError">AuthError</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;
+       <span class="where">where Self: 'async_trait,
+             'life0: 'async_trait</span>;
+<span class="item-spacer"></span>    fn <a href="#tymethod.get_user_by_id" class="fn">get_user_by_id</a>&lt;'life0, 'life1, 'async_trait&gt;(
+        &amp;'life0 self,
+        id: &amp;'life1 <a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.str.html">str</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;
+       <span class="where">where Self: 'async_trait,
+             'life0: 'async_trait,
+             'life1: 'async_trait</span>;
+<span class="item-spacer"></span>    fn <a href="#tymethod.get_user_by_identifier" class="fn">get_user_by_identifier</a>&lt;'life0, 'life1, 'async_trait&gt;(
+        &amp;'life0 self,
+        identifier: &amp;'life1 <a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.str.html">str</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;
+       <span class="where">where Self: 'async_trait,
+             'life0: 'async_trait,
+             'life1: 'async_trait</span>;
+<span class="item-spacer"></span>    fn <a href="#tymethod.update_user" class="fn">update_user</a>&lt;'life0, 'life1, 'async_trait&gt;(
+        &amp;'life0 self,
+        user: &amp;'life1 <a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.unit.html">()</a>, <a class="enum" href="../../../../error/enum.AuthError.html" title="enum authen::error::AuthError">AuthError</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;
+       <span class="where">where Self: 'async_trait,
+             'life0: 'async_trait,
+             'life1: 'async_trait</span>;
+<span class="item-spacer"></span>    fn <a href="#tymethod.delete_user" class="fn">delete_user</a>&lt;'life0, 'life1, 'async_trait&gt;(
+        &amp;'life0 self,
+        id: &amp;'life1 <a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.str.html">str</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.unit.html">()</a>, <a class="enum" href="../../../../error/enum.AuthError.html" title="enum authen::error::AuthError">AuthError</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;
+       <span class="where">where Self: 'async_trait,
+             'life0: 'async_trait,
+             'life1: 'async_trait</span>;
+<span class="item-spacer"></span>    fn <a href="#tymethod.get_user_by_oauth_id" class="fn">get_user_by_oauth_id</a>&lt;'life0, 'life1, 'async_trait&gt;(
+        &amp;'life0 self,
+        provider: <a class="enum" href="../../../oauth/store/enum.OAuth2Provider.html" title="enum authen::core::oauth::store::OAuth2Provider">OAuth2Provider</a>,
+        provider_user_id: &amp;'life1 <a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.str.html">str</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;
+       <span class="where">where Self: 'async_trait,
+             'life0: 'async_trait,
+             'life1: 'async_trait</span>;
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>An abstraction for user persistence, allowing async CRUD operations on users.</p>
+<p>Implementors of this trait provide mechanisms to add, retrieve, update, and delete users
+in a persistent store (e.g., database, in-memory, etc). All methods are asynchronous and
+return results suitable for error handling in authentication contexts.</p>
+</div></details><h2 id="required-methods" class="section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="tymethod.add_user" class="method"><a class="src rightside" href="../../../../../src/authen/core/user/persistence/traits.rs.html#20">Source</a><h4 class="code-header">fn <a href="#tymethod.add_user" class="fn">add_user</a>&lt;'life0, 'async_trait&gt;(
+    &amp;'life0 self,
+    user: <a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>, <a class="enum" href="../../../../error/enum.AuthError.html" title="enum authen::error::AuthError">AuthError</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,</div></h4></section></summary><div class="docblock"><p>Adds a new user to the repository.</p>
+<h5 id="arguments"><a class="doc-anchor" href="#arguments">§</a>Arguments</h5>
+<ul>
+<li><code>user</code> - The user entity to be added.</li>
+</ul>
+<h5 id="returns"><a class="doc-anchor" href="#returns">§</a>Returns</h5>
+<ul>
+<li><code>Ok(User)</code> - The newly created user (may include generated fields like id).</li>
+<li><code>Err(AuthError)</code> - If the user could not be added (e.g., duplicate, DB error).</li>
+</ul>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.get_user_by_id" class="method"><a class="src rightside" href="../../../../../src/authen/core/user/persistence/traits.rs.html#30">Source</a><h4 class="code-header">fn <a href="#tymethod.get_user_by_id" class="fn">get_user_by_id</a>&lt;'life0, 'life1, 'async_trait&gt;(
+    &amp;'life0 self,
+    id: &amp;'life1 <a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.str.html">str</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,
+    'life1: 'async_trait,</div></h4></section></summary><div class="docblock"><p>Retrieves a user by their unique id.</p>
+<h5 id="arguments-1"><a class="doc-anchor" href="#arguments-1">§</a>Arguments</h5>
+<ul>
+<li><code>id</code> - The unique identifier of the user.</li>
+</ul>
+<h5 id="returns-1"><a class="doc-anchor" href="#returns-1">§</a>Returns</h5>
+<ul>
+<li><code>Some(User)</code> - The user if found.</li>
+<li><code>None</code> - If no user exists with the given id.</li>
+</ul>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.get_user_by_identifier" class="method"><a class="src rightside" href="../../../../../src/authen/core/user/persistence/traits.rs.html#40">Source</a><h4 class="code-header">fn <a href="#tymethod.get_user_by_identifier" class="fn">get_user_by_identifier</a>&lt;'life0, 'life1, 'async_trait&gt;(
+    &amp;'life0 self,
+    identifier: &amp;'life1 <a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.str.html">str</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,
+    'life1: 'async_trait,</div></h4></section></summary><div class="docblock"><p>Retrieves a user by a unique identifier (e.g., username or email).</p>
+<h5 id="arguments-2"><a class="doc-anchor" href="#arguments-2">§</a>Arguments</h5>
+<ul>
+<li><code>identifier</code> - The unique identifier (such as username or email).</li>
+</ul>
+<h5 id="returns-2"><a class="doc-anchor" href="#returns-2">§</a>Returns</h5>
+<ul>
+<li><code>Some(User)</code> - The user if found.</li>
+<li><code>None</code> - If no user exists with the given identifier.</li>
+</ul>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.update_user" class="method"><a class="src rightside" href="../../../../../src/authen/core/user/persistence/traits.rs.html#50">Source</a><h4 class="code-header">fn <a href="#tymethod.update_user" class="fn">update_user</a>&lt;'life0, 'life1, 'async_trait&gt;(
+    &amp;'life0 self,
+    user: &amp;'life1 <a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.unit.html">()</a>, <a class="enum" href="../../../../error/enum.AuthError.html" title="enum authen::error::AuthError">AuthError</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,
+    'life1: 'async_trait,</div></h4></section></summary><div class="docblock"><p>Updates an existing user in the repository.</p>
+<h5 id="arguments-3"><a class="doc-anchor" href="#arguments-3">§</a>Arguments</h5>
+<ul>
+<li><code>user</code> - The user entity with updated fields.</li>
+</ul>
+<h5 id="returns-3"><a class="doc-anchor" href="#returns-3">§</a>Returns</h5>
+<ul>
+<li><code>Ok(())</code> - If the update was successful.</li>
+<li><code>Err(AuthError)</code> - If the update failed (e.g., user not found, DB error).</li>
+</ul>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.delete_user" class="method"><a class="src rightside" href="../../../../../src/authen/core/user/persistence/traits.rs.html#60">Source</a><h4 class="code-header">fn <a href="#tymethod.delete_user" class="fn">delete_user</a>&lt;'life0, 'life1, 'async_trait&gt;(
+    &amp;'life0 self,
+    id: &amp;'life1 <a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.str.html">str</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.unit.html">()</a>, <a class="enum" href="../../../../error/enum.AuthError.html" title="enum authen::error::AuthError">AuthError</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,
+    'life1: 'async_trait,</div></h4></section></summary><div class="docblock"><p>Deletes a user from the repository by their id.</p>
+<h5 id="arguments-4"><a class="doc-anchor" href="#arguments-4">§</a>Arguments</h5>
+<ul>
+<li><code>id</code> - The unique identifier of the user to delete.</li>
+</ul>
+<h5 id="returns-4"><a class="doc-anchor" href="#returns-4">§</a>Returns</h5>
+<ul>
+<li><code>Ok(())</code> - If the user was successfully deleted.</li>
+<li><code>Err(AuthError)</code> - If the deletion failed (e.g., user not found, DB error).</li>
+</ul>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.get_user_by_oauth_id" class="method"><a class="src rightside" href="../../../../../src/authen/core/user/persistence/traits.rs.html#71-75">Source</a><h4 class="code-header">fn <a href="#tymethod.get_user_by_oauth_id" class="fn">get_user_by_oauth_id</a>&lt;'life0, 'life1, 'async_trait&gt;(
+    &amp;'life0 self,
+    provider: <a class="enum" href="../../../oauth/store/enum.OAuth2Provider.html" title="enum authen::core::oauth::store::OAuth2Provider">OAuth2Provider</a>,
+    provider_user_id: &amp;'life1 <a class="primitive" href="https://doc.rust-lang.org/1.94.0/std/primitive.str.html">str</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.94.0/core/pin/struct.Pin.html" title="struct core::pin::Pin">Pin</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.94.0/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;dyn <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/future/future/trait.Future.html" title="trait core::future::future::Future">Future</a>&lt;Output = <a class="enum" href="https://doc.rust-lang.org/1.94.0/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../struct.User.html" title="struct authen::core::user::User">User</a>&gt;&gt; + <a class="trait" href="https://doc.rust-lang.org/1.94.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'async_trait&gt;&gt;<div class="where">where
+    Self: 'async_trait,
+    'life0: 'async_trait,
+    'life1: 'async_trait,</div></h4></section></summary><div class="docblock"><p>Retrieves a user by their OAuth provider and provider user ID.</p>
+<h5 id="arguments-5"><a class="doc-anchor" href="#arguments-5">§</a>Arguments</h5>
+<ul>
+<li><code>provider</code> - The OAuth2 provider.</li>
+<li><code>provider_user_id</code> - The user ID from the OAuth provider.</li>
+</ul>
+<h5 id="returns-5"><a class="doc-anchor" href="#returns-5">§</a>Returns</h5>
+<ul>
+<li><code>Some(User)</code> - The user if found.</li>
+<li><code>None</code> - If no user exists with the given OAuth credentials.</li>
+</ul>
+</div></details></div><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"><div class="negative-marker"></div><section id="impl-UserRepository-for-PersistentUsers" class="impl"><a class="src rightside" href="../../../../../src/authen/core/user/persistence/store.rs.html#58-177">Source</a><a href="#impl-UserRepository-for-PersistentUsers" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.UserRepository.html" title="trait authen::core::user::persistence::traits::UserRepository">UserRepository</a> for <a class="enum" href="../store/enum.PersistentUsers.html" title="enum authen::core::user::persistence::store::PersistentUsers">PersistentUsers</a></h3><div class="docblock"><p>Implements the <code>UserRepository</code> trait for <code>PersistentUsers</code>,
+delegating all operations to the selected backend.</p>
+</div></section><div class="docblock"><p>This allows seamless switching between different persistence mechanisms
+without changing the business logic that depends on <code>UserRepository</code>.</p>
+</div><section id="impl-UserRepository-for-InMemoryUserRepo" class="impl"><a class="src rightside" href="../../../../../src/authen/core/user/persistence/in_memory.rs.html#38-157">Source</a><a href="#impl-UserRepository-for-InMemoryUserRepo" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.UserRepository.html" title="trait authen::core::user::persistence::traits::UserRepository">UserRepository</a> for <a class="struct" href="../in_memory/struct.InMemoryUserRepo.html" title="struct authen::core::user::persistence::in_memory::InMemoryUserRepo">InMemoryUserRepo</a></h3></section></div><script src="../../../../../trait.impl/authen/core/user/persistence/traits/trait.UserRepository.js" async></script></section></div></main></body></html>
