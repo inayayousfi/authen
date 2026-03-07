@@ -1,41 +1,29 @@
 [package]
 name = "authen"
-version = "0.3.2"
+version = "0.1.0"
 edition = "2024"
 description = "A robust, modular, high-level, and secure authentication crate for Rust."
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/narangcia-oss/authen"
+repository = "https://github.com/ZiedYousfi/authen"
 documentation = "https://docs.rs/authen"
 keywords = ["auth", "authentication", "security", "jwt", "argon2"]
 categories = ["authentication", "cryptography", "web-programming"]
 
 [dependencies]
-# Pour le hachage des mots de passe. Robuste et sécurisé.
 argon2 = "0.5.3"
-# Pour la manipulation des JWT.
 jsonwebtoken = "9.3.1"
-# Pour gérer les dates et durées (expiration des tokens).
 chrono = { version = "0.4.41", features = ["serde"] }
-# Pour générer des identifiants uniques.
 uuid = { version = "1.17.0", features = ["serde", "v4"] }
-# Pour tes types d'erreurs (ergonomie et clarté).
 thiserror = "2.0.12"
-# Pour la sérialisation/désérialisation (ex: config, claims JWT).
 serde = { version = "1.0.219", features = ["derive"] }
-# Pour rendre les méthodes de trait async.
 async-trait = "0.1.88"
-# Pour la génération de nombres aléatoires sécurisés (sels, etc.).
 rand = { version = "0.9.2" }
-# Pour la journalisation professionnelle (niveau infos/erreurs).
 log = "0.4.27"
 zeroize = { version = "1.8.1", features = ["derive"] }
 serde_json = "1.0.142"
-# OAuth2 support
 oauth2 = { version = "5.0.0" }
 reqwest = { version = "0.12.22", features = ["json"] }
-
-# --- Optional dependencies for features ---
 sqlx = { version = "0.8.6", features = [
   "runtime-tokio",
   "macros",
@@ -57,11 +45,8 @@ db = ["postgres"]
 full = ["db", "web"]
 
 [dev-dependencies]
-# Pour les tests asynchrones et les exemples
 tokio = { version = "1.47.1", features = ["full"] }
-# Pour la journalisation dans les tests/développement
 env_logger = "0.11.8"
-# Pour les benchmarks de performance
 criterion = { version = "0.7.0", features = [
   "async",
   "async_tokio",
