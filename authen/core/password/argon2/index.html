@@ -2,8 +2,8 @@
 <p>This module provides an implementation of the <a href="../manager/trait.SecurePasswordManager.html" title="trait authen::core::password::manager::SecurePasswordManager"><code>SecurePasswordManager</code></a> trait using the Argon2 password hashing algorithm.
 It is responsible for securely hashing and verifying passwords using Argon2, a modern and secure password hashing function.</p>
 <h2 id="example"><a class="doc-anchor" href="#example">§</a>Example</h2>
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span><span class="kw">crate</span>::core::password::argon2::Argon2PasswordManager;
-<span class="kw">use </span><span class="kw">crate</span>::core::password::manager::SecurePasswordManager;
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>authen::core::password::argon2::Argon2PasswordManager;
+<span class="kw">use </span>authen::core::password::manager::SecurePasswordManager;
 <span class="kw">let </span>manager = Argon2PasswordManager::default();
 <span class="kw">let </span>password = <span class="string">"mysecret"</span>;
 <span class="kw">let </span>hash = manager.hash_password(password).<span class="kw">await</span>.unwrap();

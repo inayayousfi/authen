@@ -5,10 +5,10 @@
 <a href=#5 id=5 data-nosnippet>5</a>//!
 <a href=#6 id=6 data-nosnippet>6</a>//! # Example
 <a href=#7 id=7 data-nosnippet>7</a>//!
-<a href=#8 id=8 data-nosnippet>8</a>//! ```rust
-<a href=#9 id=9 data-nosnippet>9</a>//! use crate::core::password::argon2::Argon2PasswordManager;
-<a href=#10 id=10 data-nosnippet>10</a>//! use crate::core::password::manager::SecurePasswordManager;
-<a href=#11 id=11 data-nosnippet>11</a>//! # tokio_test::block_on(async {
+<a href=#8 id=8 data-nosnippet>8</a>//! ```rust,no_run
+<a href=#9 id=9 data-nosnippet>9</a>//! use authen::core::password::argon2::Argon2PasswordManager;
+<a href=#10 id=10 data-nosnippet>10</a>//! use authen::core::password::manager::SecurePasswordManager;
+<a href=#11 id=11 data-nosnippet>11</a>//! # tokio::runtime::Runtime::new().unwrap().block_on(async {
 <a href=#12 id=12 data-nosnippet>12</a>//! let manager = Argon2PasswordManager::default();
 <a href=#13 id=13 data-nosnippet>13</a>//! let password = "mysecret";
 <a href=#14 id=14 data-nosnippet>14</a>//! let hash = manager.hash_password(password).await.unwrap();

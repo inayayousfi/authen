@@ -17,10 +17,10 @@ Argon2 password hashing and verification utilities.</li>
 It exposes a simple interface for generating password hashes and verifying them, using secure random salts.</p>
 <h2 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h2>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>authen::core::hash::argon2::Argon2Hasher;
-<span class="kw">use </span>argon2::password_hash::SaltString;
+<span class="kw">use </span>authen::core::hash::generate_secure_salt;
 
 <span class="kw">let </span>hasher = Argon2Hasher::new();
 <span class="kw">let </span>password = <span class="string">b"mysecret"</span>;
-<span class="kw">let </span>salt = SaltString::generate(<span class="kw-2">&amp;mut </span>rand::thread_rng());
+<span class="kw">let </span>salt = generate_secure_salt().unwrap();
 <span class="kw">let </span>hash = hasher.hash(password, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>salt)).unwrap();
 <span class="macro">assert!</span>(hasher.verify(password, <span class="kw-2">&amp;</span>hash).unwrap());</code></pre></div></div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Argon2Hasher.html" title="struct authen::core::hash::argon2::Argon2Hasher">Argon2<wbr>Hasher</a></dt><dd>A wrapper for the Argon2 password hashing algorithm.</dd></dl></section></div></main></body></html>

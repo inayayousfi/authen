@@ -7,11 +7,11 @@
 <a href=#7 id=7 data-nosnippet>7</a>//!
 <a href=#8 id=8 data-nosnippet>8</a>//! ```rust
 <a href=#9 id=9 data-nosnippet>9</a>//! use authen::core::hash::argon2::Argon2Hasher;
-<a href=#10 id=10 data-nosnippet>10</a>//! use argon2::password_hash::SaltString;
+<a href=#10 id=10 data-nosnippet>10</a>//! use authen::core::hash::generate_secure_salt;
 <a href=#11 id=11 data-nosnippet>11</a>//!
 <a href=#12 id=12 data-nosnippet>12</a>//! let hasher = Argon2Hasher::new();
 <a href=#13 id=13 data-nosnippet>13</a>//! let password = b"mysecret";
-<a href=#14 id=14 data-nosnippet>14</a>//! let salt = SaltString::generate(&amp;mut rand::thread_rng());
+<a href=#14 id=14 data-nosnippet>14</a>//! let salt = generate_secure_salt().unwrap();
 <a href=#15 id=15 data-nosnippet>15</a>//! let hash = hasher.hash(password, Some(&amp;salt)).unwrap();
 <a href=#16 id=16 data-nosnippet>16</a>//! assert!(hasher.verify(password, &amp;hash).unwrap());
 <a href=#17 id=17 data-nosnippet>17</a>//! ```
@@ -36,7 +36,7 @@
 <a href=#36 id=36 data-nosnippet>36</a>    ///
 <a href=#37 id=37 data-nosnippet>37</a>    /// # Examples
 <a href=#38 id=38 data-nosnippet>38</a>    ///
-<a href=#39 id=39 data-nosnippet>39</a>    /// ```rust
+<a href=#39 id=39 data-nosnippet>39</a>    /// ```rust,no_run
 <a href=#40 id=40 data-nosnippet>40</a>    /// use authen::core::hash::argon2::Argon2Hasher;
 <a href=#41 id=41 data-nosnippet>41</a>    /// let hasher = Argon2Hasher::new();
 <a href=#42 id=42 data-nosnippet>42</a>    /// ```
