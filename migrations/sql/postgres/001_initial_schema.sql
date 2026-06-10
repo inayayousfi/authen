@@ -55,3 +55,8 @@ CREATE INDEX idx_oauth_provider_user ON authen_oauth_accounts(provider, provider
 
 -- Index for faster OAuth lookups by email
 CREATE INDEX idx_oauth_email ON authen_oauth_accounts(email) WHERE email IS NOT NULL;
+
+-- Tracks the applied database schema version for migrations.
+CREATE TABLE authen_version(version bigint NOT NULL);
+
+INSERT INTO authen_version(version) VALUES (1);
