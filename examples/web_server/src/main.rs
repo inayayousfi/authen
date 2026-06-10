@@ -107,13 +107,14 @@
 //! use std::sync::Arc;
 //!
 //! #[tokio::main]
-//! async fn main() {
+//! async fn main() -> std::io::Result<()> {
 //!     env_logger::init();
 //!     let auth_service = Arc::new(AuthService::default());
 //!     #[cfg(feature = "axum")]
-//!     start_server(auth_service).await;
+//!     start_server(auth_service, None).await?;
 //!     #[cfg(not(feature = "web"))]
 //!     println!("Please enable the 'web' feature to run the web server example.");
+//!     Ok(())
 //! }
 //! ```
 //!
@@ -134,13 +135,14 @@ use std::sync::Arc;
 /// - If the `web` feature is enabled, the server is started and listens on `0.0.0.0:3000`.
 /// - If the `web` feature is not enabled, a message is printed to enable the feature.
 ///
-/// # Panics
-/// This function will panic if the Tokio runtime cannot be started.
+/// # Returns
+/// Returns [`std::io::Result<()>`]. Errors from starting the Tokio runtime or server are returned
+/// to the caller rather than panicked.
 #[tokio::main]
-async fn main() {
+async fn main() -> std::io::Result<()> {
     // Initialize logging
     env_logger::init();
 
     let auth_service = Arc::new(AuthService::default());
-    start_server(auth_service, None).await;
+    start_server(auth_service, None).await
 }

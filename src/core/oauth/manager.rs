@@ -371,7 +371,7 @@ impl OAuth2Service for OAuth2Manager {
         let client = self.get_client(provider)?;
 
         let config = self.configs.get(&provider).unwrap();
-        // Dans ton code Rust, assure-toi de dédupliquer les scopes
+        // Collect default and additional scopes.
         let mut all_scopes = provider
             .default_scopes()
             .into_iter()
@@ -383,7 +383,7 @@ impl OAuth2Service for OAuth2Manager {
         }
         all_scopes.extend(config.additional_scopes.clone());
 
-        // Déduplication des scopes
+        // Deduplicate scopes.
         all_scopes.sort();
         all_scopes.dedup();
 
@@ -595,7 +595,7 @@ impl OAuth2Service for OAuth2Manager {
         &self,
         provider: OAuth2Provider,
     ) -> Result<String, AuthError> {
-        self.get_redirect_frontend_uri(provider)
+        OAuth2Manager::get_redirect_frontend_uri(self, provider)
     }
 }
 

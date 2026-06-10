@@ -35,11 +35,12 @@ sqlx = { version = "0.8.6", features = [
 sqlx-postgres = { version = "0.8.6", optional = true }
 axum = { version = "0.8.4", optional = true }
 tokio = { version = "1.47.1", features = ["full"], optional = true }
+percent-encoding = { version = "2.3.2", optional = true }
 
 [features]
 bare = []
 postgres = ["dep:sqlx", "dep:sqlx-postgres", "tokio"]
-axum = ["dep:axum", "tokio"]
+axum = ["dep:axum", "dep:percent-encoding", "tokio"]
 web = ["axum"]
 db = ["postgres"]
 full = ["db", "web"]
