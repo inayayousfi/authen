@@ -1,11 +1,11 @@
 [package]
 name = "authen"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 description = "A robust, modular, high-level, and secure authentication crate for Rust."
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/ZiedYousfi/authen"
+repository = "https://github.com/inayayousfi/authen"
 documentation = "https://docs.rs/authen"
 keywords = ["auth", "authentication", "security", "jwt", "argon2"]
 categories = ["authentication", "cryptography", "web-programming"]

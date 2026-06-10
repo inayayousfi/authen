@@ -22,7 +22,7 @@ Add this line to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-authen = { version = "0.3.0", features = ["full"] }
+authen = { version = "0.2.0", features = ["full"] }
 ```
 
 ## Development
@@ -58,6 +58,3 @@ Contributions are welcome! Please see `CONTRIBUTING.md` for more details.
 ## License
 
 This project is licensed under the [Apache-2.0 License](LICENCE).
-
----
-*Developed by Zied.*
