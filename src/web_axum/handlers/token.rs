@@ -6,6 +6,7 @@ use axum::{
 };
 
 use crate::{
+    AuthError,
     auth_service::AuthService,
     web_axum::{
         models::{
@@ -41,10 +42,16 @@ pub(crate) async fn validate(
             subject: claims.get_subject().to_string(),
             expiration: claims.get_expiration(),
         })),
-        Err(_) => Ok(Json(ValidateTokenResponse {
+        Err(
+            AuthError::InvalidToken(_) | AuthError::TokenExpired | AuthError::TokenValidation(_),
+        ) => Ok(Json(ValidateTokenResponse {
             valid: false,
             subject: String::new(),
             expiration: 0,
         })),
+        Err(err) => Err(ApiError::internal(format!(
+            "token validation service error: {}",
+            err
+        ))),
     }
 }
