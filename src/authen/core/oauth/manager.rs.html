@@ -371,7 +371,7 @@
 <a href=#371 id=371 data-nosnippet>371</a>        <span class="kw">let </span>client = <span class="self">self</span>.get_client(provider)<span class="question-mark">?</span>;
 <a href=#372 id=372 data-nosnippet>372</a>
 <a href=#373 id=373 data-nosnippet>373</a>        <span class="kw">let </span>config = <span class="self">self</span>.configs.get(<span class="kw-2">&amp;</span>provider).unwrap();
-<a href=#374 id=374 data-nosnippet>374</a>        <span class="comment">// Dans ton code Rust, assure-toi de dédupliquer les scopes
+<a href=#374 id=374 data-nosnippet>374</a>        <span class="comment">// Collect default and additional scopes.
 <a href=#375 id=375 data-nosnippet>375</a>        </span><span class="kw">let </span><span class="kw-2">mut </span>all_scopes = provider
 <a href=#376 id=376 data-nosnippet>376</a>            .default_scopes()
 <a href=#377 id=377 data-nosnippet>377</a>            .into_iter()
@@ -383,7 +383,7 @@
 <a href=#383 id=383 data-nosnippet>383</a>        }
 <a href=#384 id=384 data-nosnippet>384</a>        all_scopes.extend(config.additional_scopes.clone());
 <a href=#385 id=385 data-nosnippet>385</a>
-<a href=#386 id=386 data-nosnippet>386</a>        <span class="comment">// Déduplication des scopes
+<a href=#386 id=386 data-nosnippet>386</a>        <span class="comment">// Deduplicate scopes.
 <a href=#387 id=387 data-nosnippet>387</a>        </span>all_scopes.sort();
 <a href=#388 id=388 data-nosnippet>388</a>        all_scopes.dedup();
 <a href=#389 id=389 data-nosnippet>389</a>
@@ -595,7 +595,7 @@
 <a href=#595 id=595 data-nosnippet>595</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
 <a href=#596 id=596 data-nosnippet>596</a>        provider: OAuth2Provider,
 <a href=#597 id=597 data-nosnippet>597</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;String, AuthError&gt; {
-<a href=#598 id=598 data-nosnippet>598</a>        <span class="self">self</span>.get_redirect_frontend_uri(provider)
+<a href=#598 id=598 data-nosnippet>598</a>        OAuth2Manager::get_redirect_frontend_uri(<span class="self">self</span>, provider)
 <a href=#599 id=599 data-nosnippet>599</a>    }
 <a href=#600 id=600 data-nosnippet>600</a>}
 <a href=#601 id=601 data-nosnippet>601</a>
