@@ -30,10 +30,14 @@ impl ApiError {
         Self::new(StatusCode::UNAUTHORIZED, message)
     }
 
+    pub fn conflict(error: impl ToString) -> Self {
+        Self::new(StatusCode::CONFLICT, error.to_string())
+    }
+
     pub fn internal(error: impl ToString) -> Self {
         Self::new(
             StatusCode::INTERNAL_SERVER_ERROR,
-            format!("Configuration error: {}", error.to_string()),
+            format!("Internal server error: {}", error.to_string()),
         )
     }
 

@@ -8,6 +8,38 @@ use axum::{
     },
     response::Redirect,
 };
+use percent_encoding::{AsciiSet, CONTROLS, utf8_percent_encode};
+
+const OAUTH_FRAGMENT_ENCODE_SET: &AsciiSet = &CONTROLS
+    .add(b' ')
+    .add(b'!')
+    .add(b'"')
+    .add(b'#')
+    .add(b'$')
+    .add(b'%')
+    .add(b'&')
+    .add(b'\'')
+    .add(b'(')
+    .add(b')')
+    .add(b'*')
+    .add(b'+')
+    .add(b',')
+    .add(b'/')
+    .add(b':')
+    .add(b';')
+    .add(b'<')
+    .add(b'=')
+    .add(b'>')
+    .add(b'?')
+    .add(b'@')
+    .add(b'[')
+    .add(b'\\')
+    .add(b']')
+    .add(b'^')
+    .add(b'`')
+    .add(b'{')
+    .add(b'|')
+    .add(b'}');
 
 use crate::{
     auth_service::{AuthService, LoginMethod, SignupMethod},
@@ -61,22 +93,22 @@ pub(crate) async fn callback(
             let redirect_url = format!(
                 "{}#access_token={}&refresh_token={}&user_id={}&token_type=Bearer&expires_in=3600",
                 frontend_uri,
-                url_encode(&tokens.access_token),
-                url_encode(&tokens.refresh_token),
-                url_encode(&user.id)
+                utf8_percent_encode(&tokens.access_token, OAUTH_FRAGMENT_ENCODE_SET),
+                utf8_percent_encode(&tokens.refresh_token, OAUTH_FRAGMENT_ENCODE_SET),
+                utf8_percent_encode(&user.id, OAUTH_FRAGMENT_ENCODE_SET)
             );
 
-            Ok(Redirect::permanent(&redirect_url))
+            Ok(Redirect::temporary(&redirect_url))
         }
         Err(error) => {
             let redirect_url = format!(
                 "{}#error={}&error_description={}",
                 frontend_uri,
-                url_encode("authentication_failed"),
-                url_encode(&error.to_string())
+                utf8_percent_encode("authentication_failed", OAUTH_FRAGMENT_ENCODE_SET),
+                utf8_percent_encode(&error.to_string(), OAUTH_FRAGMENT_ENCODE_SET)
             );
 
-            Ok(Redirect::permanent(&redirect_url))
+            Ok(Redirect::temporary(&redirect_url))
         }
     }
 }
@@ -117,16 +149,4 @@ pub(crate) async fn login(
         .map_err(ApiError::bad_request)?;
 
     Ok(Json(LoginResponse::from_user_and_tokens(user, tokens)))
-}
-
-fn url_encode(value: &str) -> String {
-    value
-        .bytes()
-        .map(|byte| match byte {
-            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
-                (byte as char).to_string()
-            }
-            _ => format!("%{byte:02X}"),
-        })
-        .collect()
 }

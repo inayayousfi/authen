@@ -7,6 +7,7 @@ use axum::{
 
 use crate::{
     auth_service::{AuthService, LoginMethod, SignupMethod},
+    error::AuthError,
     web_axum::{
         models::{CredentialsRequest, LoginResponse, UserResponse},
         response::{ApiError, ApiResult},
@@ -25,7 +26,15 @@ pub(crate) async fn signup(
             password: payload.password,
         })
         .await
-        .map_err(ApiError::bad_request)?;
+        .map_err(|error| match error {
+            AuthError::UserAlreadyExists => ApiError::conflict(error),
+            AuthError::SignupError(message)
+                if message.to_lowercase().contains("already exists") =>
+            {
+                ApiError::conflict(AuthError::SignupError(message))
+            }
+            _ => ApiError::bad_request(error),
+        })?;
 
     Ok(Json(UserResponse::from(user)))
 }
@@ -42,7 +51,10 @@ pub(crate) async fn login(
             password: payload.password,
         })
         .await
-        .map_err(ApiError::bad_request)?;
+        .map_err(|error| match error {
+            AuthError::InvalidCredentials => ApiError::unauthorized(error.to_string()),
+            _ => ApiError::bad_request(error),
+        })?;
 
     Ok(Json(LoginResponse::from_user_and_tokens(user, tokens)))
 }

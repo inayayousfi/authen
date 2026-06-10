@@ -24,7 +24,7 @@ pub(crate) async fn refresh(
     let tokens = auth_service
         .refresh_access_token(&payload.refresh_token)
         .await
-        .map_err(ApiError::bad_request)?;
+        .map_err(|error| ApiError::unauthorized(error.to_string()))?;
 
     Ok(Json(TokenPairResponse::from(tokens)))
 }
@@ -35,14 +35,16 @@ pub(crate) async fn validate(
 ) -> ApiResult<ValidateTokenResponse> {
     let Json(payload) = payload.map_err(ApiError::from_json_rejection)?;
 
-    let claims = auth_service
-        .validate_access_token(&payload.token)
-        .await
-        .map_err(ApiError::bad_request)?;
-
-    Ok(Json(ValidateTokenResponse {
-        valid: true,
-        subject: claims.get_subject().to_string(),
-        expiration: claims.get_expiration(),
-    }))
+    match auth_service.validate_access_token(&payload.token).await {
+        Ok(claims) => Ok(Json(ValidateTokenResponse {
+            valid: true,
+            subject: claims.get_subject().to_string(),
+            expiration: claims.get_expiration(),
+        })),
+        Err(_) => Ok(Json(ValidateTokenResponse {
+            valid: false,
+            subject: String::new(),
+            expiration: 0,
+        })),
+    }
 }

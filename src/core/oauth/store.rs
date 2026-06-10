@@ -111,6 +111,20 @@ impl OAuth2Provider {
     }
 }
 
+impl std::str::FromStr for OAuth2Provider {
+    type Err = String;
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        match value.to_lowercase().as_str() {
+            "google" => Ok(Self::Google),
+            "github" => Ok(Self::GitHub),
+            "discord" => Ok(Self::Discord),
+            "microsoft" => Ok(Self::Microsoft),
+            _ => Err("expected one of: google, github, discord, microsoft".to_string()),
+        }
+    }
+}
+
 /// Represents an OAuth2 token, including access and refresh tokens, expiration, and provider info.
 ///
 /// This struct holds all relevant information about an OAuth2 token issued by a provider,

@@ -20,12 +20,12 @@ use super::{handlers, middleware::auth_context_middleware};
 /// - `address`: Optional socket address override. When omitted, the server uses
 ///   `0.0.0.0:3000`.
 ///
-/// # Panics
-/// Panics if the TCP listener cannot bind or the Axum server fails to start.
+/// # Errors
+/// Returns an error if the TCP listener cannot bind or the Axum server fails to start.
 pub async fn start_server(
     auth_service: Arc<AuthService>,
     address: impl Into<Option<std::net::SocketAddr>>,
-) {
+) -> std::io::Result<()> {
     use axum::serve;
     use tokio::net::TcpListener;
 
@@ -36,8 +36,8 @@ pub async fn start_server(
 
     log::info!("Axum server running at http://{addr}");
 
-    let listener = TcpListener::bind(addr).await.unwrap();
-    serve(listener, app).await.unwrap();
+    let listener = TcpListener::bind(addr).await?;
+    serve(listener, app).await
 }
 
 /// Returns an Axum router with Authen's HTTP API mounted.

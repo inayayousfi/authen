@@ -137,10 +137,10 @@ use std::sync::Arc;
 /// # Panics
 /// This function will panic if the Tokio runtime cannot be started.
 #[tokio::main]
-async fn main() {
+async fn main() -> std::io::Result<()> {
     // Initialize logging
     env_logger::init();
 
     let auth_service = Arc::new(AuthService::default());
-    start_server(auth_service, None).await;
+    start_server(auth_service, None).await
 }

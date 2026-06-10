@@ -185,13 +185,9 @@ impl From<crate::core::oauth::store::OAuth2UserInfo> for OAuthAccountResponse {
 }
 
 pub(crate) fn parse_oauth_provider(value: &str) -> Result<OAuth2Provider, ApiError> {
-    match value.to_lowercase().as_str() {
-        "google" => Ok(OAuth2Provider::Google),
-        "github" => Ok(OAuth2Provider::GitHub),
-        "discord" => Ok(OAuth2Provider::Discord),
-        "microsoft" => Ok(OAuth2Provider::Microsoft),
-        _ => Err(ApiError::bad_request(AuthError::InvalidInput(format!(
-            "Unsupported OAuth2 provider: {value}"
-        )))),
-    }
+    value.parse::<OAuth2Provider>().map_err(|error| {
+        ApiError::bad_request(AuthError::InvalidInput(format!(
+            "Unsupported OAuth2 provider: {value}: {error}"
+        )))
+    })
 }

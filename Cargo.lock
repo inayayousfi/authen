@@ -154,6 +154,7 @@ dependencies = [
  "jsonwebtoken",
  "log",
  "oauth2",
+ "percent-encoding",
  "rand 0.9.2",
  "reqwest",
  "serde",
